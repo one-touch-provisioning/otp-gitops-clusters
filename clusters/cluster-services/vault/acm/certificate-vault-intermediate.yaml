@@ -1,0 +1,14 @@
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: vault-intermediate-ca
+  namespace: vault
+spec:
+  secretName: vault-intermediate-ca
+  issuerRef:
+    name: local-issuer
+    kind: ClusterIssuer
+    group: cert-manager.io
+  commonName: "vault.local-issuer.cert-manager"
+  isCA: true

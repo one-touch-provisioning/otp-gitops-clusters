@@ -1,0 +1,11 @@
+apiVersion: cluster.open-cluster-management.io/v1
+kind: ManagedCluster
+metadata:
+  name: ocp-swinney-io
+  labels:
+    vendor: OpenShift
+    name: ocp-swinney-io
+    cloud: vSphere
+    argocd: true
+spec:
+  hubAcceptsClient: true

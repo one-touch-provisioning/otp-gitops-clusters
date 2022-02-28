@@ -1,0 +1,6 @@
+resources:
+  - application.yaml
+  - placement-rule.yaml
+  - subscription.yaml
+  - channel.yaml
+  - namespace.yaml

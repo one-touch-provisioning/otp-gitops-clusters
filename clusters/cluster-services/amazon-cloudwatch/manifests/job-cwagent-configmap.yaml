@@ -1,0 +1,15 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: cwagent-configmap-customisation
+  namespace: amazon-cloudwatch 
+spec:
+  template:
+    spec:
+      containers:
+        - name: cwagent-configmap
+          image: quay.io/nickmerrett/cloudwatch-predeploy:latest
+          imagePullPolicy: Always
+      restartPolicy: Never
+      serviceAccountName: cwagent-predeploy-job
+  backoffLimit: 2

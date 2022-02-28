@@ -1,0 +1,10 @@
+apiVersion: cluster.open-cluster-management.io/v1
+kind: ManagedCluster
+metadata:
+  name: syd-ibmcloud
+  labels:
+    vendor: OpenShift
+    name: syd-ibmcloud
+    argocd: true
+spec:
+  hubAcceptsClient: true

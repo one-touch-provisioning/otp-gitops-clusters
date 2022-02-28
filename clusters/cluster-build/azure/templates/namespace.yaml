@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  annotations:
+    openshift.io/description: ""
+    openshift.io/display-name: {{ .Values.cluster }}
+  name: {{ .Values.cluster }}
+  annotations:
+    argocd.argoproj.io/sync-wave: "350"

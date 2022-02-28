@@ -1,0 +1,6 @@
+kind: Project
+apiVersion: project.openshift.io/v1
+metadata:
+  name: syd-ibmcloud
+  labels:
+    cluster.open-cluster-management.io/managedCluster: syd-ibmcloud

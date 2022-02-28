@@ -1,0 +1,18 @@
+{{ template "vault.mode" . }}
+{{- if ne .mode "external" }}
+{{- if and (eq (.Values.server.service.enabled | toString) "true" ) (eq (.Values.global.enabled | toString) "true") }}
+# Service for Vault cluster
+apiVersion: multicluster.x-k8s.io/v1alpha1
+kind: ServiceExport
+metadata:
+  name: {{ template "vault.fullname" . }}
+  namespace: vault
+  labels:
+    helm.sh/chart: {{ include "vault.chart" . }}
+    app.kubernetes.io/name: {{ include "vault.name" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+  annotations:
+{{ template "vault.service.annotations" .}}
+{{- end }}
+{{- end }}

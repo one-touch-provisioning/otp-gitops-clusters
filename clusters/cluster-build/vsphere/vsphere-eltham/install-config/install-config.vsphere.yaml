@@ -1,0 +1,78 @@
+apiVersion: v1
+metadata:
+  name: '{{ .Values.cluster }}' 
+baseDomain: {{ .Values.provider.baseDomain }}
+controlPlane:
+  hyperthreading: Enabled
+  name: master
+  replicas: {{ .Values.masters.count }}
+  platform:
+    vsphere:
+      cpus: {{ .Values.masters.cpus }} 
+      coresPerSocket:  {{ .Values.masters.coresPerSocket }}
+      memoryMB:  {{ .Values.masters.memoryMB }}
+      osDisk:
+        diskSizeGB: {{ .Values.masters.diskGB }}
+compute:
+- hyperthreading: Enabled
+  name: 'worker'
+  replicas: {{ .Values.workers.count }}
+  platform:
+    vsphere:
+      cpus: {{ .Values.workers.cpus }} 
+      coresPerSocket:  {{ .Values.workers.coresPerSocket }}
+      memoryMB:  {{ .Values.workers.memoryMB }}
+      osDisk:
+        diskSizeGB: {{ .Values.workers.diskGB }}
+platform:
+  vsphere:
+    vCenter: {{ .Values.provider.vcenter}} 
+    username: {{ .Values.provider.username }}
+    password: {{ .Values.provider.password }}
+    datacenter: {{ .Values.provider.datacenter }}
+    defaultDatastore: {{ .Values.provider.datastore }}
+    cluster: {{ .Values.provider.vmClusterName }}
+    apiVIP: {{ .Values.network.apiVIP }}
+    ingressVIP: {{ .Values.network.ingressVIP }}
+    network: {{ .Values.network.networkName }}
+pullSecret: "" # skip, hive will inject based on it's secrets
+sshKey: |-
+    {{ .Values.provider.sshPublickey }}
+proxy:
+  httpProxy: http://10.20.20.175:3128
+  httpsProxy: https://10.20.20.175:3128 
+additionalTrustBundle: |
+  -----BEGIN CERTIFICATE-----
+  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
+  -----END CERTIFICATE-----

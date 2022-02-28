@@ -1,0 +1,13 @@
+apiVersion: policy.open-cluster-management.io/v1
+kind: PolicyGenerator
+metadata:
+  name: install-openshift-gitops
+policyDefaults:
+  namespace: policies
+  placement:
+    placementRulePath: ./managed-clusters-placementrule.yaml
+  remediationAction: enforce
+policies:
+  - name: install-openshift-gitops
+    manifests:
+      - path: ./openshift-gitops-subscription.yaml

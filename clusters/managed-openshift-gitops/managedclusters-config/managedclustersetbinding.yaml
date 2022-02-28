@@ -1,0 +1,9 @@
+# Creates a ManagedClusterSetBinding to the openshift-gitops project
+---
+apiVersion: cluster.open-cluster-management.io/v1alpha1
+kind: ManagedClusterSetBinding
+metadata:
+  name: last-mile-gitops
+  namespace: openshift-gitops
+spec:
+  clusterSet: last-mile-gitops

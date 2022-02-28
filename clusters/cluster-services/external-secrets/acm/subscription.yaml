@@ -1,0 +1,18 @@
+apiVersion: apps.open-cluster-management.io/v1
+kind: Subscription
+metadata:
+  name: external-secrets-subscription
+  namespace: external-secrets 
+  labels:
+    app: external-secrets
+  annotations:
+      apps.open-cluster-management.io/git-branch: ${GIT_GITOPS_BRANCH} 
+      apps.open-cluster-management.io/git-path: clusters/cluster-services/external-secrets/manifests/ 
+      apps.open-cluster-management.io/reconcile-option: replace
+spec:
+  channel: external-secrets/external-secrets-channel
+  placement:
+    placementRef:
+      kind: PlacementRule
+      name: external-secrets-placement-1
+#      apiGroup: apps.open-cluster-management.io

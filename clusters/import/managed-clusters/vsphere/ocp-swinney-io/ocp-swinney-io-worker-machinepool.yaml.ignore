@@ -1,0 +1,19 @@
+apiVersion: hive.openshift.io/v1
+kind: MachinePool
+metadata:
+  name: ocp-swinney-io-worker
+  namespace: ocp-swinney-io
+spec:
+  clusterDeploymentRef:
+    name: ocp-swinney-io
+  name: worker
+  platform:
+    vsphere:
+      coresPerSocket: 2
+      cpus: 2
+      memoryMB: 8192
+      osDisk:
+        diskSizeGB: 60
+  autoscaling:
+    minReplicas: 3
+    maxReplicas: 6

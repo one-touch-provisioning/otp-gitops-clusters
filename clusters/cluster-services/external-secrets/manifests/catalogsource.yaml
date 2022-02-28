@@ -1,0 +1,12 @@
+apiVersion: operators.coreos.com/v1alpha1
+kind: CatalogSource
+metadata:
+  name: external-secrets-operator-catalog
+  namespace: external-secrets
+spec:
+  sourceType: grpc
+  image: ghcr.io/external-secrets/external-secrets-helm-operator-catalog:latest
+  displayName: External Secrets Operator
+  updateStrategy:
+    registryPoll:
+      interval: 30m

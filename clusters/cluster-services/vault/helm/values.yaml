@@ -1,0 +1,112 @@
+global:
+  tlsDisable: false
+  openshift: true
+
+clusterNames:
+  - cluster0
+  - cluster1
+  - cluster2
+
+rootca_crt: LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSURHRENDQWdDZ0F3SUJBZ0lRSDBJZStxQWNqUjN5WGJGVVB5NDF1ekFOQmdrcWhraUc5dzBCQVFzRkFEQW0KTVNRd0lnWURWUVFERXh0allTNXpaV3htTFhOcFoyNWxjaTVqWlhKMExXMWhibUZuWlhJd0hoY05Nakl3TVRJegpNak16TVRReldoY05Nakl3TkRJek1qTXpNVFF6V2pBbU1TUXdJZ1lEVlFRREV4dGpZUzV6Wld4bUxYTnBaMjVsCmNpNWpaWEowTFcxaGJtRm5aWEl3Z2dFaU1BMEdDU3FHU0liM0RRRUJBUVVBQTRJQkR3QXdnZ0VLQW9JQkFRREIKeGpzMk9vU3lDdE5YQzhDZzhxVEJ1WXM2MDZmMGVGRkhIeXVyN3Z1NjFtNGZxazRrazRQbWtrY0JNcldHMVJQNwpTSFZtUTJ3bzlOczNuMWJoa0o1N0JxeUZSdyt4NlNVNjdaNHpBWWJqNG1TWVM4dC82OGtXTUFUcXF2cVE5NkxDCng2Snd6cmtPWjdVSk50RndiSjJ1VEU0V2RXVERZU1ZHNmRMSEZoZjlZUURVRGNrUGF2ZUE2SFRZaXdJaDU2aUwKRUE3bmhNK2psVUkwTDdSQTZkYy9DMUtjZmdHSzM3RXEveWV1OTluTmd6d2p6Y3NIc0w1ZjVNYklWVmVqUEpacgp4eHJqQkVEclJuRTNLWE0zbjE2aEgzM3ZOdmNDUWl6QzcvTEdRNjluRFdiNitnNEFuZGhuT3QySFUraDlQaTh5Ck5oMkNtWlhuSXdpeTY5VDdGaFp2QWdNQkFBR2pRakJBTUE0R0ExVWREd0VCL3dRRUF3SUNwREFQQmdOVkhSTUIKQWY4RUJUQURBUUgvTUIwR0ExVWREZ1FXQkJSanNLeENrQkJEUG9KTVVtUlhaWmVocnYwWFBqQU5CZ2txaGtpRwo5dzBCQVFzRkFBT0NBUUVBbVc4MVZjM0VEQ1JCYVdTNjRwNHBNS2NlaFMvTFdUUVlDU0FVRUEwK3lzWXppQjh3Cjc1Skc0MUtSeEQ0SWhHNk42Q1g5YXFnQ2JGZDdUbENjcVphQkw4emErbmFLSzRTZVJsekI0U3o2V0ZlcmF1RGUKS3R0bmN5TjlsazdTRG1DOU9zNHJUQ2NiVzZUeFlYVzVlbUcxeTJjNXRCSmNXTjFTY3M3eitlaWNNVVBFV3pRKwo1MjJtTWphcGNtaWxjaXRqUEdLSStCdmNvVlI0MmdDVmJXSHUrTGJDd20vQnRwV2MxUHdCMTlGd002NXFjK1E2Cmo1aDE2TmxrTlNmVWdPU0lIbHBqcDBTR2JXZ1A1YVc1VU1DUkFQZXBlZnNKa1o3bFZOaHNjaHgwbkdzTkFZSk8KeXkvaEd1TGx6dzd4UjJHMStHM1lCWE5MN2dmbE1FR0pueVZTQ1E9PQotLS0tLUVORCBDRVJUSUZJQ0FURS0tLS0tCg==
+rootca_key: LS0tLS1CRUdJTiBSU0EgUFJJVkFURSBLRVktLS0tLQpNSUlFb3dJQkFBS0NBUUVBd2NZN05qcUVzZ3JUVnd2QW9QS2t3Ym1MT3RPbjlIaFJSeDhycSs3N3V0WnVINnBPCkpKT0Q1cEpIQVRLMWh0VVQrMGgxWmtOc0tQVGJONTlXNFpDZWV3YXNoVWNQc2VrbE91MmVNd0dHNCtKa21FdkwKZit2SkZqQUU2cXI2a1BlaXdzZWljTTY1RG1lMUNUYlJjR3lkcmt4T0ZuVmt3MkVsUnVuU3h4WVgvV0VBMUEzSgpEMnIzZ09oMDJJc0NJZWVvaXhBTzU0VFBvNVZDTkMrMFFPblhQd3RTbkg0Qml0K3hLdjhucnZmWnpZTThJODNMCkI3QytYK1RHeUZWWG96eVdhOGNhNHdSQTYwWnhOeWx6TjU5ZW9SOTk3emIzQWtJc3d1L3l4a092WncxbSt2b08KQUozWVp6cmRoMVBvZlQ0dk1qWWRncG1WNXlNSXN1dlUreFlXYndJREFRQUJBb0lCQVFDeDcybm4vZ3hqd1hVWAo5WDdKVElibUxZOGdVY05reGljOGUrOEtUc1Z4Wi81dnJWOWNUdWxNRFA2T3B4WHgzakFmQ3daakJYNklqVy9QCnY4MTBDK3k3WkFGLzBTVWtaY2IrT2J5UGNkTi81eUFnaVZrdytqOEkxTWR2QmRwWXpFejFONFIrdWhWTW1RYXcKazFuM05vWUV5NlRaRXF1WWpkaEJLZTJYU3o1ME44b1RsYTJ2NDBLWkEwNnEyQUJLSmZhVk8zb1NKWXo1bnN5SQoxMXk3NUxSWFlUMEt5d053em9xZ0xwS2EraXlXR3ZHWjJTZmY3VE5QRDFEV2VNeXpuZkFTNTJ0WFE3ck0wMlZ2CnZaU0o5VzF0WVBCSk9CdVg3RytLbkJ5YWFXRFFWR0pGZmNkYUgrbDJLSVhleEszM05ZdVB2Qk82L1M3ZjhLdnMKOGVmQVpvdkJBb0dCQU43STI3OUJ1VTE2bkVveEoxOVRIYnZEelliZTJ6YzlCS2dDck9veXVOWk1nODUrT2loMApTcFRMOXdad09xdjFPZ3VVN2dJK1Ivd3N5WDBpdzd3bjNDRmQ2aEN4ZXNjaGZtelRJbG1Eb3dlQ1Y1WGF6YjMyCnhRZHZkL2NJL3FWWlVDWis0TWhJalZPV0YyUlZWeFlIK01obkYvcEM0ajdzbTdWRnFMeS9DZy9KQW9HQkFONnEKSDFVdEVBRlVvUndsdkdCSTJXZncyclI5SG5aYkhVTGpSZ1VSbXY0MUh5eXN3T3VhR3RKdFFIQ1F0NGdnNlJxTgp0Sk1Ib1htVGE3enJnMVd5K1B5UUhzTDR3b1UwRFRGcThMVG5qVHNlRzNJNGFoWlEzSVZIL0EvYnF3MGI5WkFCCi9wSTlHSVNXUVk2UjVNOVlQcG03bFlFcGZXa2hKKy9ZTW8xeUFzQjNBb0dBT0JEYVpJWjR5TXZiZXp4bGlUTFUKbjhWRit2UW92UDBKSi9NTWF4LzZya3V4UEEwK082SVFodVBSdGZnV2UrSUtDcElmVjhjdXZJTFU3ajRLZmxhVgpxbndGQk5CMWNwbTJSRkxhS1NiY3AyNGc5cUNLK0l5YXh5VkJUcFVmNktMU2JlMnVTaGtnSC9IOHp3NC9EVmRTClA3VGFMdXdZSGZmVHM4bmxEaU1SdUNrQ2dZQXNNRHJUbm9QRW45VHhUeFBaVDl2Rll1a2tWSWhOR0x2djRFYXYKRHRWaGlZMU1RbVJ1M1VCaGJra1JqY2ErZnptRGlZZkNmZ3N2bzNBSUovMENidWcyeHlzenFrYUFSTm94YW5XbQprU1ZZREJ1S1NXUFVWZXZOajRHWWJCSEFJa0pUZC9IYmQ4QjczNDNYQzJFTFBRbi9YRmpKTDBDeU1tQkltdkU5ClhOanE5UUtCZ0NacnVrM3BCcEE1dDNLdElSQytpZXI4Z01jVXkzVWZSak02dUJoTXpQMUVWSW5Mb3YxbGxETUUKNVk2M0p1NUEybGFMVzVMbSt1b0FmbzRPcS9td21TbkpqVWM3VDRVWXhKVEQ1eWprdFBMdmd3b0ptVVgycktpZworcEdIV3VON3IxVnA5R2pxYmd1U3lxWThQSk0wZTBUdFdZamNPNzBzQ3BDL2VsZUJVNDRTCi0tLS0tRU5EIFJTQSBQUklWQVRFIEtFWS0tLS0tCg==
+global_base_domain: global.ibmsbaasonaws.com 
+
+vault:  
+  ui:
+    enabled: true
+  server:
+    image: 
+      tag: 1.8.1
+    multicluster:
+      enabled: true 
+      cluster: aws-cluster-shared-2
+    extraVolumes:
+      - type: 'secret'
+        name: 'vault-tls'
+        path: '/etc'                 
+    ha:
+      replicas: 3
+      enabled: true
+      raft:
+        enabled: true
+        setNodeId: true
+        config: |
+          ui = true
+
+          listener "tcp" {
+            address = "[::]:8200"
+            cluster_address = "[::]:8201"
+            tls_cert_file="/etc/vault-tls/tls.crt"
+            tls_key_file="/etc/vault-tls/tls.key"
+            tls_client_ca_file="/etc/vault-tls/ca.crt"          
+          }
+
+          storage "raft" {
+            path = "/vault/data"
+    
+            retry_join {
+              leader_api_addr = "https://vault-0.aws-cluster-shared-0.vault-internal.vault.svc.clusterset.local:8200"
+              leader_ca_cert_file = "/etc/vault-tls/ca.crt"
+            }
+
+            retry_join {
+              leader_api_addr = "https://vault-1.aws-cluster-shared-0.vault-internal.vault.svc.clusterset.local:8200"
+              leader_ca_cert_file = "/etc/vault-tls/ca.crt"
+            }
+
+            retry_join {
+              leader_api_addr = "https://vault-2.aws-cluster-shared-0.vault-internal.vault.svc.clusterset.local:8200"
+              leader_ca_cert_file = "/etc/vault-tls/ca.crt"
+            }            
+
+            retry_join {
+              leader_api_addr = "https://vault-0.aws-cluster-shared-1.vault-internal.vault.svc.clusterset.local:8200"
+              leader_ca_cert_file = "/etc/vault-tls/ca.crt"
+            }
+
+            retry_join {
+              leader_api_addr = "https://vault-1.aws-cluster-shared-1.vault-internal.vault.svc.clusterset.local:8200"
+              leader_ca_cert_file = "/etc/vault-tls/ca.crt"
+            }
+
+            retry_join {
+              leader_api_addr = "https://vault-2.aws-cluster-shared-1.vault-internal.vault.svc.clusterset.local:8200"
+              leader_ca_cert_file = "/etc/vault-tls/ca.crt"
+            }               
+
+            retry_join {
+              leader_api_addr = "https://vault-0.aws-cluster-shared-2.vault-internal.vault.svc.clusterset.local:8200"
+              leader_ca_cert_file = "/etc/vault-tls/ca.crt"
+            }
+
+            retry_join {
+              leader_api_addr = "https://vault-1.aws-cluster-shared-2.vault-internal.vault.svc.clusterset.local:8200"
+              leader_ca_cert_file = "/etc/vault-tls/ca.crt"
+            }      
+
+            retry_join {
+              leader_api_addr = "https://vault-2.aws-cluster-shared-2.vault-internal.vault.svc.clusterset.local:8200"
+              leader_ca_cert_file = "/etc/vault-tls/ca.crt"
+            }                              
+
+          }
+
+          log_level = "debug"
+
+          service_registration "kubernetes" {}  
+    affinity: |
+      podAntiAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          - labelSelector:
+              matchLabels:
+                app.kubernetes.io/name: vault
+                app.kubernetes.io/instance: vault
+                component: server
+            topologyKey: failure-domain.beta.kubernetes.io/zone        
+  injector:
+    extraEnvironmentVars: 
+      AGENT_INJECT_SET_SECURITY_CONTEXT: "false"
+    image:
+      repository: "docker.io/hashicorp/vault-k8s"
+      tag: "0.11.0"      
+

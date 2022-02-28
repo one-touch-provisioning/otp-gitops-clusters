@@ -1,0 +1,16 @@
+apiVersion: apps.open-cluster-management.io/v1
+kind: PlacementRule
+metadata:
+  name: vault-placement-1
+  namespace: vault 
+  labels:
+    app: vault
+spec:
+  clusterConditions:
+  - status: "True"
+    type: ManagedClusterConditionAvailable
+  clusterSelector:
+    matchExpressions: []
+    matchLabels:
+      # Replace value with Cluster you wish to provision too.
+      name: managed-roks-1 

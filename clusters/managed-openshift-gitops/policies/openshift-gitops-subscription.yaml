@@ -1,0 +1,874 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: openshift-gitops
+---
+apiVersion: operators.coreos.com/v1alpha1
+kind: Subscription
+metadata:
+  name: openshift-gitops-operator
+  namespace: openshift-operators
+  labels:
+    operators.coreos.com/openshift-gitops-operator.openshift-operators: ''
+spec:
+  channel: stable
+  installPlanApproval: Automatic
+  name: openshift-gitops-operator
+  source: redhat-operators
+  sourceNamespace: openshift-marketplace
+  config:
+    env:
+    - name: DISABLE_DEFAULT_ARGOCD_INSTANCE
+      value: 'TRUE'
+---
+kind: ClusterRole
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: custom-argocd-cluster-argocd-application-controller
+rules:
+  - verbs:
+      - '*'
+    apiGroups:
+      - ''
+    resources:
+      - pods
+      - services
+      - services/finalizers
+      - endpoints
+      - events
+      - configmaps
+      - secrets
+      - serviceaccounts
+  - verbs:
+      - '*'
+    apiGroups:
+      - 'triggers.tekton.dev'
+    resources:
+      - eventlisteners
+      - triggerbindings
+      - triggertemplates
+  - verbs:
+      - '*'
+    apiGroups:
+      - apps
+    resources:
+      - daemonsets
+      - deployments
+      - replicasets
+      - statefulsets
+  - verbs:
+      - '*'
+    apiGroups:
+      - 'route.openshift.io'
+    resources:
+      - routes
+  - verbs:
+      - '*'
+    apiGroups:
+      - 'security.openshift.io'
+    resources:
+      - securitycontextconstraints
+  - verbs:
+      - '*'
+    apiGroups:
+      - 'operator.cert-manager.io'
+    resources:
+      - certmanagers
+  - verbs:
+      - '*'
+    apiGroups:
+      - 'cert-manager.io'
+    resources:
+      - clusterissuers
+  - verbs:
+      - '*'
+    apiGroups:
+      - 'bitnami.com'
+    resources:
+      - sealedsecretcontrollers
+      - sealedsecrets
+  - verbs:
+      - '*'
+    apiGroups:
+      - 'integreatly.org'
+    resources:
+      - grafanas
+      - grafanadatasources
+      - grafanadashboards
+  - verbs:
+      - '*'
+    apiGroups:
+      - 'networking.k8s.io'
+    resources:
+      - networkpolicies
+  - verbs:
+      - '*'
+    apiGroups:
+      - 'integration.ibm.com'
+    resources:
+      - platformnavigators
+  - verbs:
+      - '*'
+    apiGroups:
+      - 'operators.coreos.com'
+    resources:
+      - subscriptions
+  - verbs:
+      - '*'
+    apiGroups:
+      - 'tekton.dev'
+    resources:
+      - pipelines
+      - tasks
+  - verbs:
+      - '*'
+    apiGroups:
+      - 'maistra.io'
+    resources:
+      - servicemeshcontrolplanes
+      - servicemeshmembers
+      - servicemeshmemberrolls
+  - verbs:
+      - '*'
+    apiGroups:
+      - 'networking.istio.io'
+    resources:
+      - virtualservices
+      - gateways
+      - destinationrules
+  - verbs:
+      - create
+      - list
+    apiGroups:
+      - ''
+    resources:
+      - events
+  - verbs:
+      - '*'
+    apiGroups:
+      - batch
+    resources:
+      - cronjobs
+      - jobs
+  - verbs:
+      - '*'
+    apiGroups:
+      - argoproj.io
+    resources:
+      - applications
+      - appprojects
+  - verbs:
+      - get
+      - list
+      - watch
+    apiGroups:
+      - '*'
+    resources:
+      - '*'
+  - verbs:
+      - get
+      - list
+    nonResourceURLs:
+      - '*'
+  - verbs:
+      - '*'
+    apiGroups:
+      - operators.coreos.com
+    resources:
+      - '*'
+  - verbs:
+      - '*'
+    apiGroups:
+      - operator.openshift.io
+    resources:
+      - '*'
+  - verbs:
+      - '*'
+    apiGroups:
+      - user.openshift.io
+    resources:
+      - '*'
+  - verbs:
+      - '*'
+    apiGroups:
+      - config.openshift.io
+    resources:
+      - '*'
+  - verbs:
+      - '*'
+    apiGroups:
+      - console.openshift.io
+    resources:
+      - '*'
+  - verbs:
+      - '*'
+    apiGroups:
+      - ''
+    resources:
+      - namespaces
+      - persistentvolumeclaims
+      - persistentvolumes
+      - configmaps
+  - verbs:
+      - '*'
+    apiGroups:
+      - rbac.authorization.k8s.io
+    resources:
+      - '*'
+  - verbs:
+      - '*'
+    apiGroups:
+      - storage.k8s.io
+    resources:
+      - '*'
+  - verbs:
+      - '*'
+    apiGroups:
+      - appconnect.ibm.com
+    resources:
+      - integrationservers
+      - dashboards
+      - configurations
+  - verbs:
+      - '*'
+    apiGroups:
+      - machineconfiguration.openshift.io
+    resources:
+      - machineconfigpools
+      - containerruntimeconfigs
+  - verbs:
+      - '*'
+    apiGroups:
+      - tuned.openshift.io
+    resources:
+      - tuneds
+  - verbs:
+      - '*'
+    apiGroups:
+      - apiextensions.k8s.io
+    resources:
+      - customresourcedefinitions
+  - verbs:
+      - '*'
+    apiGroups:
+      - processmining.ibm.com
+    resources:
+      - processminings
+  - verbs:
+      - '*'
+    apiGroups:
+      - ocs.openshift.io
+    resources:
+      - storageclusters
+  - verbs:
+      - '*'
+    apiGroups:
+      - imageregistry.operator.openshift.io
+    resources:
+      - configs
+  - verbs:
+      - '*'
+    apiGroups:
+      - operator.ibm.com
+    resources:
+      - commonservices
+  - verbs:
+      - '*'
+    apiGroups:
+      - mq.ibm.com
+    resources:
+      - queuemanagers
+  - verbs:
+      - '*'
+    apiGroups:
+      - icp4a.ibm.com
+    resources:
+      - icp4aclusters
+  - verbs:
+      - '*'
+    apiGroups:
+      - orchestrator.management.ibm.com
+    resources:
+      - installations
+  - verbs:
+      - '*'
+    apiGroups:
+      - operator.open-cluster-management.io
+    resources:
+      - multiclusterhubs
+  - verbs:
+      - '*'
+    apiGroups:
+      - internal.open-cluster-management.io
+    resources:
+      - managedclusterinfos
+  - verbs:
+      - '*'
+    apiGroups:
+      - cluster.open-cluster-management.io
+    resources:
+      - '*'
+  - verbs:
+      - '*'
+    apiGroups:
+      - project.openshift.io
+    resources:
+      - projects
+  - verbs:
+      - '*'
+    apiGroups:
+      - agent.open-cluster-management.io
+    resources:
+      - klusterletaddonconfigs
+  - verbs:
+      - '*'
+    apiGroups:
+      - admissionregistration.k8s.io
+    resources:
+      - validatingwebhookconfigurations
+      - mutatingwebhookconfigurations
+  - verbs:
+      - '*' 
+    apiGroups:
+      - cluster.open-cluster-management.io
+    resources:
+      - '*'
+  - verbs:
+      - '*'
+    apiGroups:
+      - clusterview.open-cluster-management.io
+    resources:
+      - '*'
+  - verbs:
+      - '*'
+    apiGroups:
+      - charts.helm.k8s.io
+    resources:
+      - xls
+  - verbs:
+      - '*'
+    apiGroups:
+      - objectbucket.io
+    resources:
+      - '*'
+  - verbs:
+      - get
+      - list
+      - watch
+      - create
+      - update
+      - patch
+      - delete
+    apiGroups:
+      - policy.open-cluster-management.io
+    resources:
+      - policies
+      - placementbindings
+  - verbs:
+      - get 
+      - list
+      - watch
+      - create
+      - update
+      - patch
+      - delete
+    apiGroups:
+      - apps.open-cluster-management.io
+    resources:
+      - placementrules
+  - verbs:
+      - '*'
+    apiGroups:
+      - automationcontroller.ansible.com
+    resources: 
+      - '*'
+  - verbs:
+      - create
+      - update
+      - patch
+      - delete
+    apiGroups:
+      - hco.kubevirt.io
+    resources: 
+      - hyperconvergeds
+  - verbs:
+      - create
+      - update
+      - patch
+      - delete
+    apiGroups:
+      - cdi.kubevirt.io
+    resources: 
+      - datavolumes
+  - verbs:
+      - create
+      - update
+      - patch
+      - delete
+    apiGroups:
+      - kubevirt.io
+    resources: 
+      - virtualmachines
+      - virtualmachineinstances
+      - virtualmachine-validator
+  - verbs:
+      - '*'
+    apiGroups:
+      - platform.stackrox.io
+    resources: 
+      - '*'
+---
+kind: ClusterRoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: openshift-gitops-argocd-application-controller
+subjects:
+  - kind: ServiceAccount
+    name: openshift-gitops-argocd-application-controller
+    namespace: openshift-gitops
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: custom-argocd-cluster-argocd-application-controller
+---
+kind: ClusterRoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: openshift-gitops-cntk-argocd-application-controller
+subjects:
+  - kind: ServiceAccount
+    name: openshift-gitops-cntk-argocd-application-controller
+    namespace: openshift-gitops
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: custom-argocd-cluster-argocd-application-controller
+---
+kind: ClusterRoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: openshift-gitops-cntk-argocd-application-controller-acm
+subjects:
+  - kind: ServiceAccount
+    name: openshift-gitops-cntk-argocd-application-controller
+    namespace: openshift-gitops
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: open-cluster-management:cluster-manager-admin
+---
+kind: ClusterRoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: openshift-gitops-cntk-argocd-application-controller-kubevirt
+subjects:
+  - kind: ServiceAccount
+    name: openshift-gitops-cntk-argocd-application-controller
+    namespace: openshift-gitops
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: kubevirt.io:admin
+---
+apiVersion: argoproj.io/v1alpha1
+kind: ArgoCD
+metadata:
+  name: openshift-gitops-cntk
+  namespace: openshift-gitops
+spec:
+  server:
+    autoscale:
+      enabled: false
+    grpc:
+      ingress:
+        enabled: false
+    ingress:
+      enabled: false
+    resources:
+      limits:
+        cpu: 500m
+        memory: 256Mi
+      requests:
+        cpu: 125m
+        memory: 128Mi
+    route:
+      enabled: true
+    service:
+      type: ''
+  grafana:
+    enabled: false
+    ingress:
+      enabled: false
+    resources:
+      limits:
+        cpu: 500m
+        memory: 256Mi
+      requests:
+        cpu: 250m
+        memory: 128Mi
+    route:
+      enabled: false
+  prometheus:
+    enabled: false
+    ingress:
+      enabled: false
+    route:
+      enabled: false
+  initialSSHKnownHosts: {}
+  resourceCustomizations: |
+    platform.stackrox.io/Central:
+      health.lua: |
+        hs = {}
+        if obj.status ~= nil and obj.status.conditions ~= nil then
+          for i, condition in ipairs(obj.status.conditions) do
+            if condition.status == "True" and (condition.reason == "InstallSuccessful" or condition.reason =="UpgradeSuccessful") then
+              hs.status = "Healthy"
+              hs.message = condition.message
+              return hs
+            end
+          end
+        end
+        hs.status = "Progressing"
+        hs.message = "Waiting for Central to deploy."
+        return hs
+    cdi.kubevirt.io/DataVolume:
+      health.lua: |
+        hs = { status="Progressing", message="No status available"}
+        if obj.status ~= nil then
+          if obj.status.phase ~= nil then
+            hs.message = obj.status.phase
+            if hs.message == "Succeeded" then
+              hs.status = "Healthy"
+              return hs
+            elseif hs.message == "Failed" or hs.message == "Unknown" then
+              hs.status = "Degraded"
+            elseif hs.message == "Paused" then
+              hs.status = "Suspended"
+              return hs
+            end
+          end
+          if obj.status.conditions ~= nil then
+            for i, condition in ipairs(obj.status.conditions) do
+              if condition.type == "Running" and condition.status == "False" and condition.reason == "Error" then
+                hs.status = "Degraded"
+                hs.message = condition.message
+                return hs
+              end
+            end
+          end
+        end
+        return hs
+    hco.kubevirt.io/HyperConverged:
+      health.lua: |
+        hs = { status="Progressing", message="No status available"}
+        if obj.status ~= nil then
+          if obj.status.conditions ~= nil then
+            for i, condition in ipairs(obj.status.conditions) do
+              if condition.type == "Available" and condition.status == "True" then
+                hs.status = "Healthy"
+                hs.message = "Status is Available"
+              elseif condition.type == "Degraded" and condition.status == "True" then
+                hs.status = "Degraded"
+                hs.message = condition.reason
+              elseif condition.type == "Progressing" and condition.status == "True" then
+                hs.message = condition.reason
+              end
+            end
+          end
+          if obj.status.phase ~= nil then
+            hs.message = obj.status.phase
+          end
+        end
+        return hs
+    kubevirt.io/VirtualMachineInstance:
+      health.lua: |
+        hs = { status="Progressing", message="No status available"}
+        if obj.status ~= nil then
+          if obj.status.phase ~= nil then
+            hs.message = obj.status.phase
+            if hs.message == "Failed" then
+              hs.status = "Degraded"
+              return hs
+            elseif hs.message == "Pending" or hs.message == "Scheduling" or hs.message == "Scheduled" then
+              return hs
+            elseif hs.message == "Succeeded" then
+              hs.status = "Suspended"
+              return hs
+            elseif hs.message == "Unknown" then
+              hs.status = "Unknown"
+              return hs
+            end
+          end
+          if obj.status.conditions ~= nil then
+            for i, condition in ipairs(obj.status.conditions) do
+              if condition.type == "Ready" then
+                if condition.status == "True" then
+                  hs.status = "Healthy"
+                  hs.message = "Running"
+                else
+                  hs.status = "Degraded"
+                  hs.message = condition.message
+                end
+              elseif condition.type == "Paused" and condition.status == "True" then
+                hs.status = "Suspended"
+                hs.message = condition.message
+                return hs
+              end
+            end
+          end
+        end
+        return hs
+    kubevirt.io/VirtualMachine:
+      health.lua: |
+        hs = { status="Progressing", message="No status available"}
+        if obj.status ~= nil then
+          if obj.status.conditions ~= nil then
+            for i, condition in ipairs(obj.status.conditions) do
+              if condition.type == "Paused" and condition.status == "True" then
+                hs.status = "Suspended"
+                hs.message = "Paused"
+                return hs
+              end
+              if condition.type == "Ready" then
+                if condition.status == "True" then
+                  hs.status="Healthy"
+                  hs.message="Running"
+                else
+                  if obj.status.created then
+              hs.message = "Starting"
+                  else
+                    hs.status = "Suspended"
+                    hs.message = "Stopped"
+                  end
+                end
+              end
+            end
+          end
+          if obj.status.printableStatus ~= nil then
+            hs.message = obj.status.printableStatus
+          end
+        end
+        return hs
+    bitnami.com/SealedSecret:
+      health.lua: |
+        hs = {}
+        if obj.status ~= nil then
+          if obj.status.conditions ~= nil then
+            for i, condition in ipairs(obj.status.conditions) do
+              if condition.type == "Synced" and condition.status == "False" then
+                hs.status = "Degraded"
+                hs.message = condition.message
+                return hs
+              end
+              if condition.type == "Synced" and condition.status == "True" then
+                hs.status = "Healthy"
+                hs.message = condition.message
+                return hs
+              end
+            end
+          end
+        end
+        hs.status = "Progressing"
+        hs.message = "Waiting for sync status"
+        return hs
+    build.openshift.io/BuildConfig:
+      ignoreDifferences: |
+        jsonPointers:
+        - /status/lastVersion
+    route.openshift.io/Route:
+      ignoreDifferences: |
+        jsonPointers:
+        - /status/ingress
+    ServiceAccount:
+      ignoreDifferences: |
+        jsonPointers:
+        - /imagePullSecrets
+    PersistentVolumeClaim:
+      health.lua: |
+        hs = {}
+        if obj.status ~= nil then
+          if obj.status.phase ~= nil then
+            if obj.status.phase == "Pending" then
+              hs.status = "Healthy"
+              hs.message = obj.status.phase
+              return hs
+            end
+            if obj.status.phase == "Bound" then
+              hs.status = "Healthy"
+              hs.message = obj.status.phase
+              return hs
+            end
+          end
+        end
+        hs.status = "Progressing"
+        hs.message = "Waiting for certificate"
+        return hs
+    Job:
+      health.lua: |
+        hs = {}
+        if obj.status ~= nil then
+          if obj.status.active ~= nil then
+            if obj.status.active == "1" then
+              hs.status = "Progressing"
+              hs.message = obj.status.active .. " active job(s)."
+              return hs
+            end
+          end
+          if obj.status.succeeded ~= nil then
+            if obj.status.succeeded == 1 then
+              hs.status = "Healthy"
+              hs.message = "Job completed successfully."
+              return hs
+            end
+          end
+        end
+        hs.status = "Progressing"
+        hs.message = "Waiting for Job to complete."
+        return hs
+    argoproj.io/Application:
+      ignoreDifferences: |
+        jsonPointers:
+        - /spec/source/targetRevision
+        - /spec/source/repoURL
+    argoproj.io/AppProject:
+      ignoreDifferences: |
+        jsonPointers:
+        - /spec/sourceRepos
+    operators.coreos.com/OperatorGroup:
+      ignoreDifferences: |
+        jsonPointers:
+        - /metadata/annotations/olm.providedAPIs
+    operators.coreos.com/InstallPlan:
+      health.lua: |
+        hs = {}
+        if obj.status ~= nil then
+          if obj.status.phase ~= nil then
+            hs.message = obj.status.phase
+            if obj.status.phase == "Complete" then
+              hs.status = "Healthy"
+            else
+              hs.status = "Progressing"
+            end
+            return hs
+          end
+        end
+        hs.status = "Progressing"
+        hs.message = "Unknown"
+        return hs
+    operators.coreos.com/Subscription:
+      health.lua: |
+        hs = {}
+        if obj.status ~= nil then
+          if obj.status.installedCSV ~= nil then
+            hs.status = "Healthy"
+            hs.message = "CSV Installed"
+            if obj.status.state ~= nil then
+              hs.message = obj.status.state
+            end
+            return hs
+          end
+        end
+        hs.status = "Progressing"
+        hs.message = "Unknown"
+        if obj.status.state ~= nil then
+          hs.message = obj.status.state
+        end
+        return hs
+    operator.ibm.com/CommonService:
+      health.lua: |
+        hs = {}
+        if obj.status ~= nil then
+          if obj.status.phase ~= nil then
+            hs.message = obj.status.phase
+            if obj.status.phase == "Succeeded" then
+              hs.status = "Healthy"
+            else
+              hs.status = "Progressing"
+            end
+            return hs
+          end
+        end
+        hs.status = "Progressing"
+        hs.message = "Unknown"
+        return hs
+    mq.ibm.com/QueueManager:
+      health.lua: |
+        hs = {}
+        if obj.status ~= nil then
+          if obj.status.phase ~= nil then
+            hs.message = obj.status.phase
+            if obj.status.phase == "Running" then
+              hs.status = "Healthy"
+            else
+              hs.status = "Progressing"
+            end
+            return hs
+          end
+        end
+        hs.status = "Progressing"
+        hs.message = "Unknown"
+        return hs            
+  applicationSet:
+    resources:
+      limits:
+        cpu: '2'
+        memory: 1Gi
+      requests:
+        cpu: 250m
+        memory: 512Mi
+  rbac: {}
+  repo:
+    image: quay.io/benswinneyau/openshift-gitops-repo-server
+    version: latest
+    resources:
+      limits:
+        cpu: '1'
+        memory: 512Mi
+      requests:
+        cpu: 250m
+        memory: 256Mi
+  resourceExclusions: |
+    - apiGroups:
+      - tekton.dev
+      clusters:
+      - '*'
+      kinds:
+      - TaskRun
+      - PipelineRun
+  dex:
+    resources:
+      limits:
+        cpu: 500m
+        memory: 256Mi
+      requests:
+        cpu: 250m
+        memory: 128Mi
+  ha:
+    enabled: false
+    resources:
+      limits:
+        cpu: 500m
+        memory: 256Mi
+      requests:
+        cpu: 250m
+        memory: 128Mi
+  kustomizeBuildOptions: '--enable-alpha-plugins'
+  tls:
+    ca: {}
+  redis:
+    resources:
+      limits:
+        cpu: 500m
+        memory: 256Mi
+      requests:
+        cpu: 250m
+        memory: 128Mi
+  controller:
+    processors: {}
+    resources:
+      limits:
+        cpu: '2'
+        memory: 4Gi
+      requests:
+        cpu: 250m
+        memory: 1Gi

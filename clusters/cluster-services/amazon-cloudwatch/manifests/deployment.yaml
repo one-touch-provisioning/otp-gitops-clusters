@@ -1,0 +1,51 @@
+# Deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cwagent-prometheus
+  namespace: amazon-cloudwatch
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: cwagent-prometheus
+  template:
+    metadata:
+      labels:
+        app: cwagent-prometheus
+    spec:
+      containers:
+        - name: cloudwatch-agent
+          image: amazon/cloudwatch-agent:1.247348.0b251302
+          imagePullPolicy: Always
+          resources:
+            limits:
+              cpu:  1000m
+              memory: 1000Mi
+            requests:
+              cpu: 200m
+              memory: 200Mi
+          # Please don't change below envs
+          env:
+            - name: CI_VERSION
+              value: "k8s/1.3.8"
+          # Please don't change the mountPath
+          volumeMounts:
+            - name: prometheus-cwagentconfig
+              mountPath: /etc/cwagentconfig
+            - name: prometheus-config
+              mountPath: /etc/prometheusconfig
+            - name: aws-credentials
+              mountPath: /root/.aws
+      volumes:
+        - name: prometheus-cwagentconfig
+          configMap:
+            name: prometheus-cwagentconfig
+        - name: prometheus-config
+          configMap:
+            name: prometheus-config
+        - name: aws-credentials
+          secret:
+            secretName: aws-credentials
+      terminationGracePeriodSeconds: 60
+      serviceAccountName: cwagent-prometheus
