@@ -15,4 +15,3 @@ spec:
     placementRef:
       kind: PlacementRule
       name: external-secrets-placement-1
-#      apiGroup: apps.open-cluster-management.io
