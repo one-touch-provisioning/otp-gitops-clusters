@@ -1,9 +1,0 @@
----
-apiVersion: apps.open-cluster-management.io/v1
-kind: Channel
-metadata:
-  name: external-secrets-channel
-  namespace: external-secrets
-spec:
-  pathname: https://${GIT_BASEURL}/${GIT_ORG}/otp-gitops-apps.git  
-  type: GitHub

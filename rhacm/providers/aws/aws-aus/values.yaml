@@ -1,0 +1,4 @@
+connection_name: aws-eltham22
+providerSecret: 
+provider:
+    baseDomain: nmerrett.net
