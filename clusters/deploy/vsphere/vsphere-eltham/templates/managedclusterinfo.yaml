@@ -11,4 +11,5 @@ metadata:
   name: '{{ .Values.cluster }}'
   annotations:
     argocd.argoproj.io/sync-wave: "375"
+    helm.sh/hook-weight: "375"
   namespace: '{{ .Values.cluster }}'

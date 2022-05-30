@@ -4,6 +4,7 @@ metadata:
   name: '{{ .Values.cluster }}'
   annotations:
     argocd.argoproj.io/sync-wave: "360"
+    helm.sh/hook-weight: "360"
   namespace: '{{ .Values.cluster }}'
   labels:
     cloud: 'AWS'
