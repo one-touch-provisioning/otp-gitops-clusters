@@ -2,9 +2,9 @@ apiVersion: v1
 kind: Namespace
 metadata:
   annotations:
-    openshift.io/description: ""
     openshift.io/display-name: {{ .Values.cluster }}
-  name: {{ .Values.cluster }}
-  annotations:
+    cluster.open-cluster-management.io/managedCluster: {{ .Values.cluster }}
+    kubernetes.io/metadata.name: {{ .Values.cluster }}
     argocd.argoproj.io/sync-wave: "350"
     helm.sh/hook-weight: "350"
+  name: {{ .Values.cluster }}
