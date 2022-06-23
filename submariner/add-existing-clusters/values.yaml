@@ -1,0 +1,2 @@
+clusterList: "aws-cluster-0 aws-cluster-2"
+clusterSet: "submariner-clusterset-test"

@@ -1,0 +1,20 @@
+{{- range .Values.azureClustersList }}
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: argocd-{{ . }}-submariner-config
+  namespace: openshift-gitops
+spec:
+  template:
+    spec:
+      containers:
+      - name: {{ . }}-configuration
+        image: quay.io/langley_millard_ibm/configure-azure  
+        imagePullPolicy: Always
+        env:
+          - name: CLUSTER_LIST
+            value: {{ . }}
+      restartPolicy: OnFailure
+  backoffLimit: 2
+---
+{{- end }}

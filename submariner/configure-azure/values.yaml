@@ -1,0 +1,6 @@
+azureClustersList: 
+  - azure-cluster-03
+  # - azure-cluster-shared-06
+  - azure-cluster-06
+  # - azure-cluster-shared-08
+  # - azure-test-cluster
