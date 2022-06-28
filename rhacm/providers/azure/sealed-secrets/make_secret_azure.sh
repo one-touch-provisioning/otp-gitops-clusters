@@ -17,24 +17,25 @@ function parse_yaml {
    }'
 }
 
+
 # Set variables
-if [[ -z ${VSPH_USER} ]]; then
+if [[ -z ${AZ_CLIENT_KEY} ]]; then
   echo "Please provide environment variable AZ_CLIENT_KEY contining the Azure Client Secret"
   exit 1
 fi
 
-if [[ -z ${VSPH_PASS} ]]; then
+if [[ -z ${AZ_CLIENT_ID} ]]; then
   echo "Please provide environment variable AZ_CLIENT_ID containg the Azure Client ID"
   exit 1
 fi
 
-if [[ -z ${VSPH_VCENTER} ]]; then
+if [[ -z ${AZ_TEN_ID} ]]; then
   echo "Please provide environment variable AZ_TEN_ID containing the Azure Tenant ID"
   exit 1
 fi
 
-if [[ -z ${VSPH_CACERT_FILE} ]]; then
-  echo "Please provide environment variable VSPH_CACERT_FILE containing a path to the file vcenters ca_cert"
+if [[ -z ${AZ_SUB_ID} ]]; then
+  echo "Please provide environment variable AZ_SUB_ID containing the Azure Subscription ID"
   exit 1
 fi
 
@@ -60,21 +61,18 @@ SEALED_SECRET_CONTROLLER_NAME=${SEALED_SECRET_CONTROLLER_NAME:-sealed-secrets}
 
 #read in public ssh key
 ssh_pub_key=$(cat ${SSH_PUB_FILE})
-ssh_priv_key=$(cat ${SSH_PRIV_FILE})
-ca_cert=$(cat ${VSPH_CACERT_FILE})
+ssh_priv_key=$(awk 'NF {sub(/\r/, ""); printf "%s\\n",$0;}' ${SSH_PRIV_FILE})
 
 #extract values from values.yaml
 eval $(parse_yaml values.yaml "VALUES_")
 
 #generate the provider config metadata.
 read -r -d  '' provider_config << EOM
-username: $VSPH_USER
-password: $VSPH_PASS
-vcenter: $VALUES_provider__vcenter 
-cacertificate: "$ca_cert"
-vmClusterName: $VALUES_provider__vmClusterName 
-datacenter: $VALUES_provider__datacenter  
-datastore: $VALUES_provider__datastore
+baseDomainResourceGroupName: $VALUES_provider__resource_group
+clientId: $AZ_CLIENT_ID
+clientSecret: $AZ_CLIENT_KEY
+subscriptionId: $AZ_SUB_ID
+tennantId: $AZ_TEN_ID
 baseDomain: $VALUES_provider__baseDomain
 pullSecret: '$PULL_SECRET'
 sshPrivatekey: "$ssh_priv_key"
@@ -82,7 +80,7 @@ sshPublickey: '$ssh_pub_key'
 EOM
 
 #remove the install config from templates so helm doesnt try to install it
-ENC_PROV_CFG=$(echo -n "$provider_config" | kubeseal --raw --name=$VALUES_cluster --namespace=rhacm-credentials --controller-namespace $SEALED_SECRET_NAMESPACE --controller-name $SEALED_SECRET_CONTROLLER_NAME --from-file=/dev/stdin)
+ENC_PROV_CFG=$(echo -n "$provider_config" | kubeseal --raw --name=$VALUES_connection_name --namespace=rhacm-credentials --controller-namespace $SEALED_SECRET_NAMESPACE --controller-name $SEALED_SECRET_CONTROLLER_NAME --from-file=/dev/stdin)
 
 # Encrypt the secret using kubeseal and private key from the cluster
 echo "Creating Secrets"

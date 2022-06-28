@@ -1,0 +1,39 @@
+# Cluster Pool Name
+clusterpoolName:  
+
+# OpenShift Version to deploy
+imageName: 4.10.18
+
+# Add Cluster to Existing ClusterSet
+clusterSet:
+  name: "last-mile-gitops"
+  enabled: true
+
+# Set Cluster Power State. Options are Running or Hibernating
+powerState: Running
+  
+# Cloud Provider Configuration
+provider:
+  region: eastus
+  baseDomain: azure01.ibmdojo01.com
+  resource_group: dojo-dns-zones
+  sshPublickey: 
+
+# Compute Resources to be used for Masters and Workers
+masters:
+  architecture: amd64
+  count: 3
+  diskSize: 128
+  machineType: Standard_D8s_v3
+
+workers:
+  architecture: amd64
+  count: 3
+  diskSize: 128
+  machineType: Standard_D4s_v3
+
+# Network CIDR's to be used
+network:
+  clusterCidr: 10.128.0.0/14
+  machineCidr: 10.0.0.0/16
+  serviceCidr: 172.30.0.0/16

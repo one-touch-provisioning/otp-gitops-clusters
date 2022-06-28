@@ -19,17 +19,17 @@ function parse_yaml {
 
 # Set variables
 if [[ -z ${VSPH_USER} ]]; then
-  echo "Please provide environment variable AZ_CLIENT_KEY contining the Azure Client Secret"
+  echo "Please provide environment variable VSPH_USER contining the vcenter username"
   exit 1
 fi
 
 if [[ -z ${VSPH_PASS} ]]; then
-  echo "Please provide environment variable AZ_CLIENT_ID containg the Azure Client ID"
+  echo "Please provide environment variable VSPH_PASS containg the vcenter password"
   exit 1
 fi
 
 if [[ -z ${VSPH_VCENTER} ]]; then
-  echo "Please provide environment variable AZ_TEN_ID containing the Azure Tenant ID"
+  echo "Please provide environment variable VSPH_VCENTER containing the vcenter name"
   exit 1
 fi
 
@@ -60,8 +60,8 @@ SEALED_SECRET_CONTROLLER_NAME=${SEALED_SECRET_CONTROLLER_NAME:-sealed-secrets}
 
 #read in public ssh key
 ssh_pub_key=$(cat ${SSH_PUB_FILE})
-ssh_priv_key=$(cat ${SSH_PRIV_FILE})
-ca_cert=$(cat ${VSPH_CACERT_FILE})
+ssh_priv_key=$(awk 'NF {sub(/\r/, ""); printf "%s\\n",$0;}' ${SSH_PRIV_FILE})
+ca_cert=$(awk 'NF {sub(/\r/, ""); printf "%s\\n",$0;}' ${VSPH_CACERT_FILE})
 
 #extract values from values.yaml
 eval $(parse_yaml values.yaml "VALUES_")
@@ -81,8 +81,9 @@ sshPrivatekey: "$ssh_priv_key"
 sshPublickey: '$ssh_pub_key'
 EOM
 
+echo "$provider_config"
 #remove the install config from templates so helm doesnt try to install it
-ENC_PROV_CFG=$(echo -n "$provider_config" | kubeseal --raw --name=$VALUES_cluster --namespace=rhacm-credentials --controller-namespace $SEALED_SECRET_NAMESPACE --controller-name $SEALED_SECRET_CONTROLLER_NAME --from-file=/dev/stdin)
+ENC_PROV_CFG=$(echo -n "$provider_config" | kubeseal --raw --name=$VALUES_connection_name --namespace=rhacm-credentials --controller-namespace $SEALED_SECRET_NAMESPACE --controller-name $SEALED_SECRET_CONTROLLER_NAME --from-file=/dev/stdin)
 
 # Encrypt the secret using kubeseal and private key from the cluster
 echo "Creating Secrets"

@@ -1,0 +1,20 @@
+{{- range .Values.awsClustersList }}
+apiVersion: submarineraddon.open-cluster-management.io/v1alpha1
+kind: SubmarinerConfig
+metadata:
+  name: submariner
+  namespace: {{.}}
+spec:
+  IPSecIKEPort: 500
+  IPSecNATTPort: 4500
+  NATTDiscoveryPort: 4900
+  NATTEnable: true
+  cableDriver: libreswan
+  credentialsSecret:
+    name: {{.}}-aws-creds
+  gatewayConfig:
+    aws:
+      instanceType: c5d.large
+    gateways: 1
+---
+{{- end }}

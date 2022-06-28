@@ -1,0 +1,20 @@
+{{- range .Values.gcpClustersList }}
+apiVersion: submarineraddon.open-cluster-management.io/v1alpha1
+kind: SubmarinerConfig
+metadata:
+  name: submariner
+  namespace: {{.}}
+spec:
+  IPSecIKEPort: 500
+  IPSecNATTPort: 4500
+  NATTDiscoveryPort: 4900
+  NATTEnable: true
+  cableDriver: libreswan
+  credentialsSecret:
+    name: {{.}}-gcp-creds
+  gatewayConfig:
+    gcp:
+      instanceType: n1-standard-4
+    gateways: 1
+---
+{{- end }}

@@ -1,0 +1,18 @@
+{{- range .Values.vsphereClustersList }}
+apiVersion: submarineraddon.open-cluster-management.io/v1alpha1
+kind: SubmarinerConfig
+metadata:
+  name: submariner
+  namespace: {{.}}
+spec:
+  IPSecIKEPort: 500
+  IPSecNATTPort: 4500
+  NATTDiscoveryPort: 4900
+  NATTEnable: true
+  cableDriver: libreswan
+  credentialsSecret:
+    name: {{.}}-vsphere-creds
+  gatewayConfig:
+    gateways: 1
+---
+{{- end }}

@@ -1,0 +1,13 @@
+apiVersion: hive.openshift.io/v1
+kind: ClusterClaim
+metadata:
+  name: '{{ .Values.clusterClaimName }}'
+  annotations:
+    argocd.argoproj.io/sync-wave: "350"
+    helm.sh/hook-weight: "350"
+  labels:
+    clusterClaimName: {{ .Values.clusterClaimName }} 
+  namespace: 'rhacm-clusterpools'
+spec:
+  clusterPoolName: {{ .Values.clusterPoolName }}
+

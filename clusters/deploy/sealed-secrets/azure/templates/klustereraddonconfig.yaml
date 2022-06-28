@@ -1,0 +1,24 @@
+apiVersion: agent.open-cluster-management.io/v1
+kind: KlusterletAddonConfig
+metadata:
+  name: '{{ .Values.cluster }}'
+  annotations:
+    argocd.argoproj.io/sync-wave: "360"
+    helm.sh/hook-weight: "360"
+  namespace: '{{ .Values.cluster }}'
+spec:
+  clusterName: '{{ .Values.cluster }}'
+  clusterNamespace: '{{ .Values.cluster }}'
+  clusterLabels:
+    cloud: Azure
+    vendor: OpenShift
+  applicationManager:
+    enabled: true
+  policyController:
+    enabled: true
+  searchCollector:
+    enabled: true
+  certPolicyController:
+    enabled: true
+  iamPolicyController:
+    enabled: true

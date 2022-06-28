@@ -1,0 +1,28 @@
+managedClusterSet:
+  name: submariner-clusterset
+
+# List ALL clusters that Submariner will be configured on. These should include any AWS/GWCP/VSPHERE clusters listed below
+clustersList: 
+- aws0
+- aws1
+- azure0
+- azure1
+- gcp0
+- gcp1
+- vsphere0
+- vsphere1
+
+# List AWS Clusters that will be configured for Submariner
+awsClustersList:
+- aws0
+- aws1
+
+# List GCP Clusters that will be configured for Submariner
+gcpClustersList:
+- gcp0
+- gcp1
+
+# List vSphere Clusters that will be configured for Submariner
+vsphereClustersList:
+- vsphere0
+- vsphere1

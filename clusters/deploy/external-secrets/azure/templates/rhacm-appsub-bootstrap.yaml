@@ -1,0 +1,69 @@
+{{- if eq .Values.managedCluster.status "enabled" -}}
+apiVersion: app.k8s.io/v1beta1
+kind: Application
+metadata:
+  name: bootstrap-azure-{{ .Values.cluster }}
+  namespace: openshift-gitops
+  annotations:
+    argocd.argoproj.io/sync-wave: "100"
+    helm.sh/hook-weight: "100"
+spec:
+  componentKinds:
+    - group: apps.open-cluster-management.io
+      kind: Subscription
+  descriptor: {}
+  selector:
+    matchExpressions:
+      - key: app
+        operator: In
+        values:
+          - bootstrap-azure-{{ .Values.cluster }}
+---
+apiVersion: apps.open-cluster-management.io/v1
+kind: Channel
+metadata:
+  annotations:
+    apps.open-cluster-management.io/reconcile-rate: medium
+  name: bootstrap-azure-{{ .Values.cluster }}-channel
+  namespace: {{ .Values.cluster }}
+  labels:
+    app: bootstrap-azure-{{ .Values.cluster }}
+spec:
+  type: Git
+  pathname: '{{ .Values.managedCluster.managedRepo }}' 
+---
+apiVersion: apps.open-cluster-management.io/v1
+kind: Subscription
+metadata:
+  annotations:
+    apps.open-cluster-management.io/git-branch: master
+    apps.open-cluster-management.io/git-path: 0-bootstrap/spokeclusters/azure/{{ .Values.cluster }}/bootstrap.yaml
+    apps.open-cluster-management.io/reconcile-option: merge
+    argocd.argoproj.io/sync-wave: "100"
+    helm.sh/hook-weight: "100"
+  labels:
+    app: bootstrap-azure-{{ .Values.cluster }}
+  name: bootstrap-azure-{{ .Values.cluster }}-subscription-1
+  namespace: openshift-gitops
+spec:
+  channel: {{ .Values.cluster }}/bootstrap-azure-{{ .Values.cluster }}-channel
+  placement:
+    placementRef:
+      kind: PlacementRule
+      name: bootstrap-azure-{{ .Values.cluster }}-placement-1
+---
+apiVersion: apps.open-cluster-management.io/v1
+kind: PlacementRule
+metadata:
+  labels:
+    app: bootstrap-azure-{{ .Values.cluster }}
+  name: bootstrap-azure-{{ .Values.cluster }}-placement-1
+  namespace: openshift-gitops
+  annotations:
+    argocd.argoproj.io/sync-wave: "100"
+    helm.sh/hook-weight: "100"  
+spec:
+  clusterSelector:
+    matchLabels:
+      name: {{ .Values.cluster }}
+{{- end -}}

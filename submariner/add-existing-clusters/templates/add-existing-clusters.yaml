@@ -1,0 +1,19 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: add-existing-clusters-to-clusterset
+  namespace: openshift-gitops
+spec:
+  template:
+    spec:
+      containers:
+        - name: add-existing-clusters-to-clusterset
+          image: quay.io/congxdev/managedclusterset-add-cluster:4.8
+          imagePullPolicy: Always
+          env:
+            - name: CLUSTER_LIST
+              value: {{ .Values.clusterList }}
+            - name: CLUSTER_SET
+              value: {{ .Values.clusterSet }}
+      restartPolicy: Never
+  backoffLimit: 2

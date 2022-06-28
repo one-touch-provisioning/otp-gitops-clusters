@@ -1,0 +1,15 @@
+# Cluster Claim Name, will be used to set Cluster Name
+clusterClaimName:
+
+# Cluster Pool to use to claim cluster.
+clusterPoolName:
+
+powerState: Running
+
+# Manage Cluster from Hub Cluster repository
+managedCluster: 
+  status: "disabled" # Default: disabled. Valid values "enabled" or "disabled"
+  managedRepo:  # Repository that will be used to manage the Cluster resources
+  environment:  # Typically this would be dev, test, cicd, prod
+  projectName:  # This could be a project, line of business, anything that makes sense to you. This references the folder name
+                # within the "environment" folder

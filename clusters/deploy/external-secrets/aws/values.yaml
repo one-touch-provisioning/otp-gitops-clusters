@@ -1,0 +1,51 @@
+# Cluster Name
+cluster: aws1
+
+# Manage Cluster from Hub Cluster Repository
+managedCluster: 
+  status: "disabled" # Valid values "enabled" or "disabled"
+  managedRepo: https://github.com/one-touch-provisioning/otp-gitops.git # Repository that will be used to manage the Cluster resources
+  environment:  # Typically this would be dev, test, cicd, prod
+  projectName:  # This could be a project, line of business, anything that makes sense to you. This references the folder name
+                # within the "environment" folder
+
+# OpenShift Version to deploy
+imageName: 4.10.18
+
+# Add Cluster to Existing ClusterSet
+clusterSet:
+  name: "multicloud-cluster-set"
+  enabled: true
+
+# Set Cluster Power State. Options are Running or Hibernating
+powerState: Running
+  
+# Cloud Provider Configuration
+provider:
+  region: ap-southeast-1
+  baseDomain: mutihybridcloudkitchen.com
+  sshPublickey: 
+
+# Compute Resources to be used for Masters and Workers
+masters:
+  count: 3
+  diskIops: 4000
+  diskSize: 100
+  diskType: io1
+  machineType: m5.xlarge
+
+workers:
+  count: 3
+  diskIops: 4000
+  diskSize: 100
+  diskType: io1
+  machineType: m5.xlarge
+
+# Network CIDR's to be used
+network:
+  clusterCidr: 10.128.0.0/14
+  machineCidr: 10.0.0.0/16
+  serviceCidr: 172.30.0.0/16
+
+# Load FIPS modules. Valid values are true or false
+fipsModule: false
