@@ -1,0 +1,33 @@
+clusterpoolName:  
+
+imageName: 4.10.18
+
+clusterSet:
+  name: "last-mile-gitops"
+  enabled: true
+
+provider:
+  region: 
+  baseDomain: 
+  sshPublickey: 
+
+masters:
+  architecture: amd64
+  count: 3
+  diskIops: 4000
+  diskSize: 100
+  diskType: io1
+  machineType: m5.xlarge
+
+workers:
+  architecture: amd64
+  count: 3
+  diskIops: 4000
+  diskSize: 100
+  diskType: io1
+  machineType: m5.xlarge
+
+network:
+  clusterCidr: 10.128.0.0/14
+  machineCidr: 10.0.0.0/16
+  serviceCidr: 172.30.0.0/16

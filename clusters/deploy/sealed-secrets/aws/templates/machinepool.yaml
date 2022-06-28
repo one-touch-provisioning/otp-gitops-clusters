@@ -1,0 +1,21 @@
+apiVersion: hive.openshift.io/v1
+kind: MachinePool
+metadata:
+  name: {{ .Values.cluster }}-worker
+  annotations:
+    argocd.argoproj.io/sync-wave: "360"
+    helm.sh/hook-weight: "360"
+  namespace: '{{ .Values.cluster }}'
+spec:
+  clusterDeploymentRef:
+    name: '{{ .Values.cluster }}'
+  name: worker
+  platform:
+    aws:
+      rootVolume:
+        iops: {{ .Values.workers.diskIops }}
+        size: {{ .Values.workers.diskSize }}
+        type: {{ .Values.workers.diskType }}
+      type: {{ .Values.workers.machineType }}
+  replicas: {{ .Values.workers.count }}
+

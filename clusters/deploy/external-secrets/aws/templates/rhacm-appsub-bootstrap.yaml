@@ -1,0 +1,69 @@
+{{- if eq .Values.managedCluster.status "enabled" -}}
+apiVersion: app.k8s.io/v1beta1
+kind: Application
+metadata:
+  name: bootstrap-{{ .Values.managedCluster.environment }}-{{ .Values.managedCluster.projectName }}
+  namespace: openshift-gitops
+  annotations:
+    argocd.argoproj.io/sync-wave: "380"
+    helm.sh/hook-weight: "380"
+spec:
+  componentKinds:
+    - group: apps.open-cluster-management.io
+      kind: Subscription
+  descriptor: {}
+  selector:
+    matchExpressions:
+      - key: app
+        operator: In
+        values:
+          - bootstrap-{{ .Values.managedCluster.environment }}-{{ .Values.managedCluster.projectName }}
+---
+apiVersion: apps.open-cluster-management.io/v1
+kind: Channel
+metadata:
+  annotations:
+    apps.open-cluster-management.io/reconcile-rate: medium
+  name: bootstrap-{{ .Values.managedCluster.environment }}-{{ .Values.managedCluster.projectName }}-channel
+  namespace: {{ .Values.cluster }}
+  labels:
+    app: bootstrap-{{ .Values.managedCluster.environment }}-{{ .Values.managedCluster.projectName }}
+spec:
+  type: Git
+  pathname: '{{ .Values.managedCluster.managedRepo }}' 
+---
+apiVersion: apps.open-cluster-management.io/v1
+kind: Subscription
+metadata:
+  annotations:
+    apps.open-cluster-management.io/git-branch: master
+    apps.open-cluster-management.io/git-path: 0-bootstrap/spokeclusters/{{ .Values.managedCluster.environment }}/{{ .Values.managedCluster.projectName }}/bootstrap.yaml
+    apps.open-cluster-management.io/reconcile-option: merge
+    argocd.argoproj.io/sync-wave: "380"
+    helm.sh/hook-weight: "380"
+  labels:
+    app: bootstrap-{{ .Values.managedCluster.environment }}-{{ .Values.managedCluster.projectName }}
+  name: bootstrap-{{ .Values.managedCluster.environment }}-{{ .Values.managedCluster.projectName }}-subscription-1
+  namespace: openshift-gitops
+spec:
+  channel: {{ .Values.cluster }}/bootstrap-{{ .Values.managedCluster.environment }}-{{ .Values.managedCluster.projectName }}-channel
+  placement:
+    placementRef:
+      kind: PlacementRule
+      name: bootstrap-{{ .Values.managedCluster.environment }}-{{ .Values.managedCluster.projectName }}-placement-1
+---
+apiVersion: apps.open-cluster-management.io/v1
+kind: PlacementRule
+metadata:
+  labels:
+    app: bootstrap-{{ .Values.managedCluster.environment }}-{{ .Values.managedCluster.projectName }}
+  name: bootstrap-{{ .Values.managedCluster.environment }}-{{ .Values.managedCluster.projectName }}-placement-1
+  namespace: openshift-gitops
+  annotations:
+    argocd.argoproj.io/sync-wave: "380"
+    helm.sh/hook-weight: "380"  
+spec:
+  clusterSelector:
+    matchLabels:
+      name: {{ .Values.cluster }}
+{{- end -}}

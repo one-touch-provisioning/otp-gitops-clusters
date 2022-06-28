@@ -1,0 +1,33 @@
+apiVersion: hive.openshift.io/v1
+kind: ClusterDeployment
+metadata:
+  name: '{{ .Values.cluster }}'
+  annotations:
+    argocd.argoproj.io/sync-wave: "360"
+    helm.sh/hook-weight: "360"
+  namespace: '{{ .Values.cluster }}'
+  labels:
+    cloud: 'AWS'
+    region: '{{ .Values.provider.region }}'
+    vendor: OpenShift
+spec:
+  baseDomain: {{ .Values.provider.baseDomain }}
+  clusterName: '{{ .Values.cluster }}'
+  powerState: {{ .Values.powerState }}
+  controlPlaneConfig:
+    servingCertificates: {}
+  installAttemptsLimit: 1
+  platform:
+    aws:
+      credentialsSecretRef:
+        name: {{ .Values.cluster }}-aws-creds
+      region: {{ .Values.provider.region }}
+  provisioning:
+    installConfigSecretRef:
+      name: {{ .Values.cluster }}-install-config
+    sshPrivateKeySecretRef:
+      name: {{ .Values.cluster }}-ssh-private-key
+    imageSetRef:
+      name: img{{ .Values.imageName }}-x86-64-appsub 
+  pullSecretRef:
+    name: {{ .Values.cluster }}-pull-secret

@@ -1,0 +1,45 @@
+apiVersion: external-secrets.io/v1beta1
+kind: ExternalSecret
+metadata:
+  name: azure
+spec:
+  data:
+  - secretKey: azureBaseDomain
+    remoteRef:
+      key: 094b9d3e-c841-959e-d70f-2fbe86f6ec0d 
+  - secretKey: azureBaseDomainResourceGroupName
+    remoteRef:
+      key: 77ae31bf-d4c7-cf6e-45c7-de5d7bdae1ba 
+  - secretKey: azureOsServicePrincipal
+    remoteRef:
+      key: ef8a9c51-6300-ff8a-2aa4-aef4c9d8b166 
+  - secretKey: openshiftPullSecret
+    remoteRef:
+      key: adc32372-cafe-0488-a9ab-6a971a6ca2d8
+  - secretKey: openshiftSSHPrivateKey
+    remoteRef:
+      key: 91b5a6de-a9be-2b91-a3e8-2b09e3390bcb
+  - secretKey: openshiftSSHPublicKey
+    remoteRef:
+      key: 2a4c460c-4443-3d29-ee43-18b21b9c6b3b
+  refreshInterval: 24h0m0s
+  secretStoreRef:
+    name: cluster
+    kind: ClusterSecretStore
+  target:
+    name: azure
+    creationPolicy: Owner
+    template:
+      metadata:
+        labels:
+          cluster.open-cluster-management.io/credentials: ""
+          cluster.open-cluster-management.io/type: azr
+      type: Opaque
+      data:
+        baseDomain: "{{ .azureBaseDomain | toString }}"
+        baseDomainResourceGroupName: "{{ .azureBaseDomainResourceGroupName | toString }}"
+        cloudName: AzurePublicCloud
+        osServicePrincipal.json: "{{ .azureOsServicePrincipal | toString }}"
+        pullSecret: "{{ .openshiftPullSecret | toString }}"
+        ssh-publickey: "{{ .openshiftSSHPublicKey | toString }}"
+        ssh-privatekey: "{{ .openshiftSSHPrivateKey | toString }}"

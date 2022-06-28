@@ -1,0 +1,48 @@
+# Cluster Name
+cluster: azure0
+
+# Manage Cluster from Hub Cluster Repository
+managedCluster: 
+  status: "disabled" # Valid values "enabled" or "disabled"
+  managedRepo: https://github.com/one-touch-provisioning/otp-gitops.git # Repository that will be used to manage the Cluster resources
+  environment:  # Typically this would be dev, test, cicd, prod
+  projectName:  # This could be a project, line of business, anything that makes sense to you. This references the folder name
+                # within the "environment" folder
+
+# OpenShift Version to deploy
+imageName: 4.10.18
+
+# Add Cluster to Existing ClusterSet
+clusterSet:
+  name: "last-mile-gitops"
+  enabled: true
+
+# Set Cluster Power State. Options are Running or Hibernating
+powerState: Running
+  
+# Cloud Provider Configuration
+provider:
+  region: eastus
+  baseDomain: azure01.ibmdojo01.com
+  resource_group: dojo-dns-zones
+  sshPublickey: 
+
+# Compute Resources to be used for Masters and Workers
+masters:
+  count: 3
+  diskSize: 128
+  machineType: Standard_D8s_v3
+
+workers:
+  count: 3
+  diskSize: 128
+  machineType: Standard_D4s_v3
+
+# Network CIDR's to be used
+network:
+  clusterCidr: 10.128.0.0/14
+  machineCidr: 10.0.0.0/16
+  serviceCidr: 172.30.0.0/16
+
+# Load FIPS modules. Valid values are true or false
+fipsModule: false
