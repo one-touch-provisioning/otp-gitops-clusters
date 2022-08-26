@@ -25,9 +25,10 @@ spec:
     name: {{ .Values.clusterpoolName }}-pull-secret
   skipMachinePools: true # Disable MachinePool as using custom install-config
   platform:
-    aws:
+    azure:
       credentialsSecretRef:
         name: {{ .Values.clusterpoolName }}-azure-creds
       region: {{ .Values.provider.region }}
+      baseDomainResourceGroupName: {{ .Values.provider.resource_group }}
 
   
