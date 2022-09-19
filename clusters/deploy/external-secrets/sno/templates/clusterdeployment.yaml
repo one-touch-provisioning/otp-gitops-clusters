@@ -21,7 +21,6 @@ spec:
     version: v1beta1
   controlPlaneConfig:
     servingCertificates: {}
-  installed: false
   platform:
     agentBareMetal:
       agentSelector:

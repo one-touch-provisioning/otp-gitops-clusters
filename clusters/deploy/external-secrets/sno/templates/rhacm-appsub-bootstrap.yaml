@@ -25,7 +25,7 @@ metadata:
   annotations:
     apps.open-cluster-management.io/reconcile-rate: medium
   name: bootstrap-{{ .Values.managedCluster.environment }}-{{ .Values.managedCluster.projectName }}-channel
-  namespace: {{ .Values.cluster }}
+  namespace: {{ .Values.cluster.name }}
   labels:
     app: bootstrap-{{ .Values.managedCluster.environment }}-{{ .Values.managedCluster.projectName }}
 spec:
@@ -46,7 +46,7 @@ metadata:
   name: bootstrap-{{ .Values.managedCluster.environment }}-{{ .Values.managedCluster.projectName }}-subscription-1
   namespace: openshift-gitops
 spec:
-  channel: {{ .Values.cluster }}/bootstrap-{{ .Values.managedCluster.environment }}-{{ .Values.managedCluster.projectName }}-channel
+  channel: {{ .Values.cluster.name }}/bootstrap-{{ .Values.managedCluster.environment }}-{{ .Values.managedCluster.projectName }}-channel
   placement:
     placementRef:
       kind: PlacementRule
@@ -65,5 +65,5 @@ metadata:
 spec:
   clusterSelector:
     matchLabels:
-      name: {{ .Values.cluster }}
+      name: {{ .Values.cluster.name }}
 {{- end -}}

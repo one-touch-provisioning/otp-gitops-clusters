@@ -7,15 +7,15 @@ metadata:
   annotations:
     argocd.argoproj.io/sync-wave: "360"
     helm.sh/hook-weight: "360"
-    argocd.argoproj.io/sync-options: Validate=false
   labels:
     agentclusterinstalls.extensions.hive.openshift.io/location: '{{ .Values.infraEnv.location }}'
     networkType: '{{ .Values.infraEnv.networkType }}'
+    cluster-name: {{ .Values.cluster.name }}
 spec:
   clusterRef:
     name: {{ .Values.cluster.name }}
     namespace: {{ .Values.cluster.name }} 
-  agentLabelSelector:
+  agentLabels:
     agentclusterinstalls.extensions.hive.openshift.io/location: '{{ .Values.infraEnv.location }}'
   pullSecretRef:
     name: {{ .Values.infraEnv.name }}-pull-secret 
