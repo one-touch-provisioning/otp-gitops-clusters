@@ -1,0 +1,28 @@
+---
+apiVersion: extensions.hive.openshift.io/v1beta1
+kind: AgentClusterInstall
+metadata:
+  name: '{{ .Values.cluster.name }}'
+  namespace: '{{ .Values.cluster.name }}'
+  labels:
+    agentclusterinstalls.extensions.hive.openshift.io/location: '{{ .Values.infraEnv.location }}'
+  annotations:
+    argocd.argoproj.io/sync-wave: "375"
+    helm.sh/hook-weight: "375"
+spec:
+  clusterDeploymentRef:
+    name: '{{ .Values.cluster.name }}'
+  imageSetRef:
+    name: 'openshift-{{ .Values.cluster.imageName }}'
+  networking:
+    clusterNetwork:
+      - cidr: "{{ .Values.cluster.clusterNetwork }}"
+        hostPrefix: 23
+    serviceNetwork:
+      - "{{ .Values.cluster.serviceNetwork }}"
+    machineNetwork:
+      - cidr: "{{ .Values.cluster.machineNetwork }}"
+    userManagedNetworking: true
+  provisionRequirements:
+    controlPlaneAgents: 1
+  sshPublicKey: "{{ .Values.provider.sshPublicKey }}"

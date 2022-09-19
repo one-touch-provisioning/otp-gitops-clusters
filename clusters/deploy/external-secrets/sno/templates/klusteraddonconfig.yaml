@@ -1,0 +1,24 @@
+apiVersion: agent.open-cluster-management.io/v1
+kind: KlusterletAddonConfig
+metadata:
+  name: '{{ .Values.cluster.name }}'
+  annotations:
+    argocd.argoproj.io/sync-wave: "385"
+    helm.sh/hook-weight: "385"
+  namespace: '{{ .Values.cluster.name }}'
+spec:
+  clusterName: '{{ .Values.cluster.name }}'
+  clusterNamespace: '{{ .Values.cluster.name }}'
+  clusterLabels:
+    cloud: hybrid
+    vendor: auto-detect
+  applicationManager:
+    enabled: true
+  policyController:
+    enabled: true
+  searchCollector:
+    enabled: true
+  certPolicyController:
+    enabled: true
+  iamPolicyController:
+    enabled: true

@@ -1,0 +1,37 @@
+---
+apiVersion: metal3.io/v1alpha1
+kind: BareMetalHost
+metadata:
+  name: {{ .Values.infraEnv.name }}-{{ .Values.hosts.name }}
+  namespace: {{ .Values.infraEnv.name }}
+  labels:
+    infraenvs.agent-install.openshift.io: "{{ .Values.cluster.name }}"
+  annotations:
+    inspect.metal3.io: disabled
+    bmac.agent-install.openshift.io/hostname: "{{ .Values.infraEnv.name }}-{{ .Values.hosts.name }}"
+    argocd.argoproj.io/sync-wave: "370"
+    helm.sh/hook-weight: "370"
+spec:
+  online: true
+  bmc:
+    address: {{ .Values.hosts.bmcAddress }}
+    credentialsName: dummy-secret
+    disableCertificateVerification: true
+  bootMACAddress: {{ .Values.hosts.macAddress }}
+  automatedCleaningMode: disabled
+  rootDeviceHints:
+    deviceName: "{{ .Values.hosts.diskDeviceName }}"
+---
+# dummy secret - it is not used by required by assisted service and bare metal operator
+apiVersion: v1
+kind: Secret
+metadata:
+  name: dummy-secret
+  namespace: {{ .Values.infraEnv.name }}
+  annotations:
+    argocd.argoproj.io/sync-wave: "365"
+    helm.sh/hook-weight: "365" 
+data:
+  password: Ym9iCg==
+  username: Ym9iCg==
+type: Opaque

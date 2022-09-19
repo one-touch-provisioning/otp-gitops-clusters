@@ -1,0 +1,24 @@
+---
+apiVersion: agent-install.openshift.io/v1beta1
+kind: InfraEnv
+metadata:
+  name: '{{ .Values.infraEnv.name }}'
+  namespace: '{{ .Values.infraEnv.name }}'
+  annotations:
+    argocd.argoproj.io/sync-wave: "360"
+    helm.sh/hook-weight: "360"
+    argocd.argoproj.io/sync-options: Validate=false
+  labels:
+    agentclusterinstalls.extensions.hive.openshift.io/location: '{{ .Values.infraEnv.location }}'
+    networkType: '{{ .Values.infraEnv.networkType }}'
+spec:
+  clusterRef:
+    name: {{ .Values.cluster.name }}
+    namespace: {{ .Values.cluster.name }} 
+  agentLabelSelector:
+    agentclusterinstalls.extensions.hive.openshift.io/location: '{{ .Values.infraEnv.location }}'
+  pullSecretRef:
+    name: {{ .Values.infraEnv.name }}-pull-secret 
+  sshAuthorizedKey: "{{ .Values.provider.sshPublicKey }}"
+  additionalNTPSources:
+    - '{{ .Values.infraEnv.ntpSources }}'

@@ -1,0 +1,31 @@
+{{- if eq .Values.infraEnv.networkType "static" -}}
+apiVersion: agent-install.openshift.io/v1beta1
+kind: NMStateConfig
+metadata:
+  name: {{ .Values.cluster.name }}-nmconfig 
+  namespace: {{ .Values.cluster.name }}
+  labels:
+    cluster-name: {{ .Values.cluster.name }}
+spec:
+  config:
+    interfaces:
+      - name: {{ .Values.hosts.networkCard }}
+        type: ethernet
+        state: up
+        ipv4:
+          address:
+            - ip: {{ .Values.hosts.ipAddress }} 
+              prefix-length: 24
+          dhcp: false
+          enabled: true
+        ipv6:
+          enabled: false
+    routes:
+      config:
+        - destination: 0.0.0.0/0
+          next-hop-address: {{ .Values.hosts.gatewayAddress }} 
+          next-hop-interface: {{ .Values.hosts.networkCard }} 
+  interfaces:
+    - name: "{{ .Values.hosts.networkCard }}"
+      macAddress: "{{ .Values.hosts.macAddress }}"
+{{- end -}}

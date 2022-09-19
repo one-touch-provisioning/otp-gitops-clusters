@@ -1,0 +1,31 @@
+apiVersion: hive.openshift.io/v1
+kind: ClusterDeployment
+metadata:
+  name: '{{ .Values.cluster.name }}'
+  annotations:
+    hive.openshift.io/cluster-platform: agent-baremetal
+    argocd.argoproj.io/sync-wave: "380"
+    helm.sh/hook-weight: "380"
+  namespace: '{{ .Values.cluster.name }}'
+  labels:
+    {{- if .Values.clusterSet.enabled }}
+    cluster.open-cluster-management.io/clusterset: {{.Values.clusterSet.name}} 
+    {{- end}}
+spec:
+  baseDomain: {{ .Values.provider.baseDomain }}
+  clusterName: '{{ .Values.cluster.name }}'
+  clusterInstallRef:
+    group: extensions.hive.openshift.io
+    kind: AgentClusterInstall
+    name: '{{ .Values.cluster.name }}'
+    version: v1beta1
+  controlPlaneConfig:
+    servingCertificates: {}
+  installed: false
+  platform:
+    agentBareMetal:
+      agentSelector:
+        matchLabels:  
+          agentclusterinstalls.extensions.hive.openshift.io/location: {{ .Values.infraEnv.location }}
+  pullSecretRef:
+    name: {{ .Values.infraEnv.name }}-pull-secret

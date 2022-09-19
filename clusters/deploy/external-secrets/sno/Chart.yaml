@@ -1,0 +1,5 @@
+apiVersion: v1
+name: sno-cluster-eso 
+version: "1.3"
+kubeVersion: ">= 1.9.0"
+description: RHACM cluster build for Single Node OpenShift using ExternalSecrets Operator

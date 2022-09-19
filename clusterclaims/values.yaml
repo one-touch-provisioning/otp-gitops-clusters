@@ -13,3 +13,13 @@ managedCluster:
   environment:  # Typically this would be dev, test, cicd, prod
   projectName:  # This could be a project, line of business, anything that makes sense to you. This references the folder name
                 # within the "environment" folder
+  # repoServerTokenExternalSecretId:
+  privateRepositoriesAccess:
+  - name: otp-gitops
+    url: github.private.com/private/otp-gitops
+    ghTokenSecretId: abcdef
+    secretStore: "secret-store"
+  - name: otp-gitops-infra
+    url: github.private.com/private/otp-gitops-infra
+    ghTokenSecretId: abcdef
+    secretStore: "secret-store-2"

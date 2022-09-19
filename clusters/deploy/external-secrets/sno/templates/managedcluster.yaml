@@ -1,0 +1,16 @@
+apiVersion: cluster.open-cluster-management.io/v1
+kind: ManagedCluster
+metadata:
+  labels:
+    cloud: hybrid 
+    name: '{{ .Values.cluster.name }}'
+    vendor: OpenShift
+    {{- if .Values.clusterSet.enabled }}
+    cluster.open-cluster-management.io/clusterset: {{.Values.clusterSet.name}} 
+    {{- end}}
+  name: '{{ .Values.cluster.name }}'
+  annotations:
+    argocd.argoproj.io/sync-wave: "390"
+    helm.sh/hook-weight: "390"
+spec:
+  hubAcceptsClient: true

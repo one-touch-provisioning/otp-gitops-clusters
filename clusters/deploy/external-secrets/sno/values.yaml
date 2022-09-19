@@ -1,0 +1,47 @@
+## Infrastructure Environment Name
+#infraEnv:
+#  name: # Must match cluster.name 
+#  location: 
+#  networkType:  # Valid Values are dhcp or static
+#  labels: 
+#  ntpSources: 
+
+## Cluster Details
+#cluster:
+#  name: # Must match infraEnv.name 
+#  imageName: 4.10.32
+#  clusterNetwork: 10.128.0.0/14
+#  serviceNetwork: 172.30.0.0/16
+#  machineNetwork: 192.168.1.0/24
+
+## Hosts Details
+#hosts:
+#  name: host0
+#  macAddress: 
+#  bmcAddress: redfish-virtualmedia+http://xxxxxxxx:8000/redfish/v1/Systems/b6c92bbb-1e87-4972-b17a-12def3948890
+#  networkCard: enp1s0
+#  ipAddress: 192.168.1.20
+#  gatewayAddress: 192.168.1.1
+#  diskDeviceName: /dev/vda
+
+## Manage Cluster from Hub Cluster Repository
+#managedCluster: 
+#  status: "disabled" # Valid values "enabled" or "disabled"
+#  managedRepo: https://github.com/one-touch-provisioning/otp-gitops.git # Repository that will be used to manage the Cluster resources
+#  environment:  # Typically this would be dev, test, cicd, prod
+#  projectName:  # This could be a project, line of business, anything that makes sense to you. This references the folder name
+#                # within the "environment" folder
+
+## Add Cluster to Existing ClusterSet
+#clusterSet:
+#  name: "last-mile-gitops"
+#  enabled: disable 
+
+## Cloud Provider Configuration
+#provider:
+#  baseDomain: 
+#  sshPublicKey:
+
+#externalSecrets:
+#  pullSecretRemoteRef: 32286fad-dd7d-11be-a761-0c497756176c
+#  sshPrivateKeyRemoteRef: ae87a773-e06c-e9b2-10b8-6e6a12f922b9

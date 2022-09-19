@@ -1,0 +1,8 @@
+apiVersion: internal.open-cluster-management.io/v1beta1
+kind: ManagedClusterInfo
+metadata:
+  name: '{{ .Values.cluster.name }}'
+  annotations:
+    argocd.argoproj.io/sync-wave: "395"
+    helm.sh/hook-weight: "395"
+  namespace: '{{ .Values.cluster.name }}'
