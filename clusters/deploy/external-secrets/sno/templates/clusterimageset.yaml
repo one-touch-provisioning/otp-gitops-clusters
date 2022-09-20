@@ -1,7 +1,7 @@
 apiVersion: hive.openshift.io/v1
 kind: ClusterImageSet
 metadata:
-  name: openshift-{{ .Values.cluster.imageName }}
+  name: openshift-{{ .Values.cluster.imageName }}-{{ .Values.cluster.name }}
   annotations:
     argocd.argoproj.io/sync-wave: "360"
     helm.sh/hook-weight: "360"

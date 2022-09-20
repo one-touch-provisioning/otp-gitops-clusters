@@ -13,7 +13,7 @@ spec:
   clusterDeploymentRef:
     name: '{{ .Values.cluster.name }}'
   imageSetRef:
-    name: 'openshift-{{ .Values.cluster.imageName }}'
+    name: 'openshift-{{ .Values.cluster.imageName }}-{{ .Values.cluster.name }}'
   networking:
     clusterNetwork:
       - cidr: "{{ .Values.cluster.clusterNetwork }}"
