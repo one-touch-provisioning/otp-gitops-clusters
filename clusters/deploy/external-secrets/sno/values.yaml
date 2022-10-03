@@ -1,14 +1,13 @@
 ## Infrastructure Environment Name
 #infraEnv:
-#  name: # Must match cluster.name 
-#  location: 
-#  networkType:  # Valid Values are dhcp or static
-#  labels: 
-#  ntpSources: 
+#  name: bens-infrastructure
+#  location: benswinney-house
+#  networkType: dhcp # Valid Values are dhcp or static
+#  ntpSources: 192.168.1.1
 
 ## Cluster Details
 #cluster:
-#  name: # Must match infraEnv.name 
+#  name: sno
 #  imageName: 4.10.32
 #  clusterNetwork: 10.128.0.0/14
 #  serviceNetwork: 172.30.0.0/16
@@ -17,8 +16,8 @@
 ## Hosts Details
 #hosts:
 #  name: host0
-#  macAddress: 
-#  bmcAddress: redfish-virtualmedia+http://xxxxxxxx:8000/redfish/v1/Systems/b6c92bbb-1e87-4972-b17a-12def3948890
+#  macAddress: 52:54:00:c6:fe:cc
+#  bmcAddress: redfish-virtualmedia+http://ai-edge.swinney.io:8000/redfish/v1/Systems/b6c92bbb-1e87-4972-b17a-12def3948890
 #  networkCard: enp1s0
 #  ipAddress: 192.168.1.20
 #  gatewayAddress: 192.168.1.1
@@ -34,14 +33,15 @@
 
 ## Add Cluster to Existing ClusterSet
 #clusterSet:
-#  name: "last-mile-gitops"
+#  name: "multicloud-cluster-set"
 #  enabled: disable 
 
 ## Cloud Provider Configuration
 #provider:
-#  baseDomain: 
+#  baseDomain: home.swinney.io
 #  sshPublicKey:
 
 #externalSecrets:
 #  pullSecretRemoteRef: 32286fad-dd7d-11be-a761-0c497756176c
 #  sshPrivateKeyRemoteRef: ae87a773-e06c-e9b2-10b8-6e6a12f922b9
+#  bmcCredentialsRemoteRef: 

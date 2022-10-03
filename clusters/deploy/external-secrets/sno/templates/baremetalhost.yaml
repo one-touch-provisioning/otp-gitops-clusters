@@ -15,14 +15,18 @@ spec:
   online: true
   bmc:
     address: {{ .Values.hosts.bmcAddress }}
+    {{- if .Values.externalSecrets.bmcCredentialsRemoteRef }}
+    credentialsName: {{ .Values.cluster.name }}-bmc-credentials
+    {{- else }}
     credentialsName: dummy-secret
+    {{- end }}
     disableCertificateVerification: true
   bootMACAddress: {{ .Values.hosts.macAddress }}
   automatedCleaningMode: disabled
   rootDeviceHints:
     deviceName: "{{ .Values.hosts.diskDeviceName }}"
 ---
-# dummy secret - it is not used by required by assisted service and bare metal operator
+# dummy secret - it is not used but required by assisted service and bare metal operator
 apiVersion: v1
 kind: Secret
 metadata:
@@ -32,6 +36,6 @@ metadata:
     argocd.argoproj.io/sync-wave: "365"
     helm.sh/hook-weight: "365" 
 data:
-  password: Ym9iCg==
-  username: Ym9iCg==
+  password: cmhhY20xMjM0
+  username: cmhhY20= 
 type: Opaque
