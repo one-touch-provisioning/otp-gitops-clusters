@@ -2,9 +2,10 @@ clusterpoolName:
 
 imageName: 4.10.18
 
+# Add Cluster to Existing ClusterSet, else it will automatically join the "global"  and "default" ClusterSets
 clusterSet:
-  name: "last-mile-gitops"
-  enabled: true
+  name: "multicloud-cluster-set"
+  enabled: false 
 
 provider:
   region: 

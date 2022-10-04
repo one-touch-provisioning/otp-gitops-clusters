@@ -12,10 +12,10 @@ managedCluster:
 # OpenShift Version to deploy
 imageName: 4.10.18
 
-# Add Cluster to Existing ClusterSet
+# Add Cluster to Existing ClusterSet, else it will automatically join the "global"  and "default" ClusterSets
 clusterSet:
   name: "multicloud-cluster-set"
-  enabled: true
+  enabled: false
 
 # Set Cluster Power State. Options are Running or Hibernating
 powerState: Running

@@ -31,10 +31,10 @@
 #  projectName:  # This could be a project, line of business, anything that makes sense to you. This references the folder name
 #                # within the "environment" folder
 
-## Add Cluster to Existing ClusterSet
+## Add Cluster to Existing ClusterSet, else it will automatically join the "global" and "default" ClusterSets
 #clusterSet:
 #  name: "multicloud-cluster-set"
-#  enabled: disable 
+#  enabled: false
 
 ## Cloud Provider Configuration
 #provider:
