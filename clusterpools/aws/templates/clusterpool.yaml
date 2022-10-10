@@ -3,8 +3,8 @@ kind: ClusterPool
 metadata:
   name: '{{ .Values.clusterpoolName }}'
   annotations:
-    argocd.argoproj.io/sync-wave: "320"
-    helm.sh/hook-weight: "320"
+    argocd.argoproj.io/sync-wave: "420"
+    helm.sh/hook-weight: "420"
   namespace: 'rhacm-clusterpools'
   labels:
     cloud: 'AWS'
