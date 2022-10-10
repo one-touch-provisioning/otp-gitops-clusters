@@ -4,8 +4,8 @@ metadata:
   name: '{{ .Values.cluster.name }}'
   annotations:
     hive.openshift.io/cluster-platform: agent-baremetal
-    argocd.argoproj.io/sync-wave: "380"
-    helm.sh/hook-weight: "380"
+    argocd.argoproj.io/sync-wave: "480"
+    helm.sh/hook-weight: "480"
   namespace: '{{ .Values.cluster.name }}'
   labels:
     {{- if .Values.clusterSet.enabled }}

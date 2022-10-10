@@ -9,8 +9,8 @@ metadata:
   annotations:
     inspect.metal3.io: disabled
     bmac.agent-install.openshift.io/hostname: "{{ .Values.infraEnv.name }}-{{ .Values.hosts.name }}"
-    argocd.argoproj.io/sync-wave: "370"
-    helm.sh/hook-weight: "370"
+    argocd.argoproj.io/sync-wave: "470"
+    helm.sh/hook-weight: "470"
 spec:
   online: true
   bmc:
@@ -33,8 +33,8 @@ metadata:
   name: dummy-secret
   namespace: {{ .Values.infraEnv.name }}
   annotations:
-    argocd.argoproj.io/sync-wave: "365"
-    helm.sh/hook-weight: "365" 
+    argocd.argoproj.io/sync-wave: "465"
+    helm.sh/hook-weight: "465" 
 data:
   password: cmhhY20xMjM0
   username: cmhhY20= 

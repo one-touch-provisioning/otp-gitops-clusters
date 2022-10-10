@@ -10,7 +10,7 @@ metadata:
     {{- end}}
   name: '{{ .Values.cluster.name }}'
   annotations:
-    argocd.argoproj.io/sync-wave: "390"
-    helm.sh/hook-weight: "390"
+    argocd.argoproj.io/sync-wave: "490"
+    helm.sh/hook-weight: "490"
 spec:
   hubAcceptsClient: true

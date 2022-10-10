@@ -3,8 +3,8 @@ kind: KlusterletAddonConfig
 metadata:
   name: '{{ .Values.cluster }}'
   annotations:
-    argocd.argoproj.io/sync-wave: "360"
-    helm.sh/hook-weight: "360"
+    argocd.argoproj.io/sync-wave: "460"
+    helm.sh/hook-weight: "460"
   namespace: '{{ .Values.cluster }}'
 spec:
   clusterName: '{{ .Values.cluster }}'

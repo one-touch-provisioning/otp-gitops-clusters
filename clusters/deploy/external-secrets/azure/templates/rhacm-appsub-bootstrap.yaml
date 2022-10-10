@@ -5,8 +5,8 @@ metadata:
   name: bootstrap-azure-{{ .Values.cluster }}
   namespace: openshift-gitops
   annotations:
-    argocd.argoproj.io/sync-wave: "100"
-    helm.sh/hook-weight: "100"
+    argocd.argoproj.io/sync-wave: "480"
+    helm.sh/hook-weight: "480"
 spec:
   componentKinds:
     - group: apps.open-cluster-management.io
@@ -39,8 +39,8 @@ metadata:
     apps.open-cluster-management.io/git-branch: master
     apps.open-cluster-management.io/git-path: 0-bootstrap/spokeclusters/azure/{{ .Values.cluster }}/bootstrap.yaml
     apps.open-cluster-management.io/reconcile-option: merge
-    argocd.argoproj.io/sync-wave: "100"
-    helm.sh/hook-weight: "100"
+    argocd.argoproj.io/sync-wave: "480"
+    helm.sh/hook-weight: "480"
   labels:
     app: bootstrap-azure-{{ .Values.cluster }}
   name: bootstrap-azure-{{ .Values.cluster }}-subscription-1
@@ -60,8 +60,8 @@ metadata:
   name: bootstrap-azure-{{ .Values.cluster }}-placement-1
   namespace: openshift-gitops
   annotations:
-    argocd.argoproj.io/sync-wave: "100"
-    helm.sh/hook-weight: "100"  
+    argocd.argoproj.io/sync-wave: "480"
+    helm.sh/hook-weight: "480"  
 spec:
   clusterSelector:
     matchLabels:
