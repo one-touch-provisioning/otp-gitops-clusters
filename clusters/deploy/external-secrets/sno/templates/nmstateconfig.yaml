@@ -2,6 +2,9 @@
 apiVersion: agent-install.openshift.io/v1beta1
 kind: NMStateConfig
 metadata:
+  annotations:
+    argocd.argoproj.io/sync-wave: "470"
+    helm.sh/hook-weight: "470"
   name: {{ .Values.cluster.name }}-nmconfig 
   namespace: {{ .Values.cluster.name }}
   labels:

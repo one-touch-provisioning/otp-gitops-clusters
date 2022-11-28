@@ -5,6 +5,6 @@ metadata:
     openshift.io/display-name: {{ .Values.cluster }}
     cluster.open-cluster-management.io/managedCluster: {{ .Values.cluster }}
     kubernetes.io/metadata.name: {{ .Values.cluster }}
-    argocd.argoproj.io/sync-wave: "350"
-    helm.sh/hook-weight: "350"
+    argocd.argoproj.io/sync-wave: "450"
+    helm.sh/hook-weight: "450"
   name: {{ .Values.cluster }}

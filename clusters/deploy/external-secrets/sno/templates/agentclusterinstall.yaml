@@ -7,8 +7,8 @@ metadata:
   labels:
     agentclusterinstalls.extensions.hive.openshift.io/location: '{{ .Values.infraEnv.location }}'
   annotations:
-    argocd.argoproj.io/sync-wave: "375"
-    helm.sh/hook-weight: "375"
+    argocd.argoproj.io/sync-wave: "475"
+    helm.sh/hook-weight: "475"
 spec:
   clusterDeploymentRef:
     name: '{{ .Values.cluster.name }}'

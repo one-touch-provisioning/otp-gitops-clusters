@@ -3,8 +3,8 @@ kind: ClusterClaim
 metadata:
   name: '{{ .Values.clusterClaimName }}'
   annotations:
-    argocd.argoproj.io/sync-wave: "350"
-    helm.sh/hook-weight: "350"
+    argocd.argoproj.io/sync-wave: "450"
+    helm.sh/hook-weight: "450"
     cluster.open-cluster-management.io/createmanagedcluster: "true"
   labels:
     clusterClaimName: {{ .Values.clusterClaimName }} 

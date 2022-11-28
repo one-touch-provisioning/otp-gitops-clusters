@@ -3,7 +3,7 @@ kind: ClusterImageSet
 metadata:
   name: openshift-{{ .Values.cluster.imageName }}-{{ .Values.cluster.name }}
   annotations:
-    argocd.argoproj.io/sync-wave: "360"
-    helm.sh/hook-weight: "360"
+    argocd.argoproj.io/sync-wave: "460"
+    helm.sh/hook-weight: "460"
 spec:
    releaseImage: quay.io/openshift-release-dev/ocp-release:{{ .Values.cluster.imageName }}-x86_64

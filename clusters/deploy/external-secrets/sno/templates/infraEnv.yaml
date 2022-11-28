@@ -5,8 +5,8 @@ metadata:
   name: '{{ .Values.infraEnv.name }}'
   namespace: '{{ .Values.infraEnv.name }}'
   annotations:
-    argocd.argoproj.io/sync-wave: "360"
-    helm.sh/hook-weight: "360"
+    argocd.argoproj.io/sync-wave: "460"
+    helm.sh/hook-weight: "460"
   labels:
     agentclusterinstalls.extensions.hive.openshift.io/location: '{{ .Values.infraEnv.location }}'
     networkType: '{{ .Values.infraEnv.networkType }}'

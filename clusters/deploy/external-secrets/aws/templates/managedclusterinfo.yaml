@@ -3,6 +3,6 @@ kind: ManagedClusterInfo
 metadata:
   name: '{{ .Values.cluster }}'
   annotations:
-    argocd.argoproj.io/sync-wave: "370"
-    helm.sh/hook-weight: "370"
+    argocd.argoproj.io/sync-wave: "470"
+    helm.sh/hook-weight: "470"
   namespace: '{{ .Values.cluster }}'
