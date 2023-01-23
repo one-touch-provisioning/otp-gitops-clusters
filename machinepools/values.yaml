@@ -1,0 +1,66 @@
+cloudProvider:
+  name: "" # aws, azure, ibmcloud or vsphere
+  managed: false # for roks, aro, rosa set to true
+
+vsphere:
+  clusterName: 
+  infraNodes:
+    nodeCount:
+    diskGiB:
+    memoryMiB:
+    numCPUs:
+    numCoresPerSocket:
+  storageNodes:
+    nodeCount:
+    diskGiB:
+    memoryMiB:
+    numCPUs:
+    numCoresPerSocket:
+  cloudpakNodes:
+    nodeCount:
+    diskGiB:
+    memoryMiB:
+    numCPUs:
+    numCoresPerSocket:
+
+cloud:
+  clusterName:
+  zones: {}
+  infraNodes:
+    nodeCount:
+    volumeSize:
+    volumeIops:
+    volumeType:
+    instanceType:
+    taints:
+    labels:
+  storageNodes:
+    nodeCount:
+    volumeSize:
+    volumeIops:
+    volumeType:
+    instanceType:
+    taints:
+    labels:
+  cloudpakNodes:
+    nodeCount:
+    volumeSize:
+    volumeIops:
+    volumeType:
+    instanceType:
+    taints:
+    labels:
+
+global:
+  infraNodes:
+    taints:
+      - effect: "NoSchedule"
+        key: "node-role.kubernetes.io/infra"
+        value: ""
+  storageNodes:
+    taints:
+      - effect: "NoSchedule"
+        key: "node.ocs.openshift.io/storage"
+        value: "true"
+  cloudpakNodes:
+    taints:
