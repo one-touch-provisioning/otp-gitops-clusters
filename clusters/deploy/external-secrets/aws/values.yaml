@@ -50,3 +50,11 @@ network:
 
 # Load FIPS modules. Valid values are true or false
 fipsModule: false
+
+# Everything Secrets
+secrets:
+    awsSecrets:
+      awsAccessKeyRef: 88671bfc-14d4-29ad-ab9b-950eaac3808f
+      awsSecretKeyRef: ac307a9e-41fc-23df-2f28-3ce521b971ea
+    openshiftPullSecretRef: adc32372-cafe-0488-a9ab-6a971a6ca2d8
+    openshiftSSHPrivateKeyRef: 91b5a6de-a9be-2b91-a3e8-2b09e3390bcb
