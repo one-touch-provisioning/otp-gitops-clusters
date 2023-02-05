@@ -1,0 +1,36 @@
+apiVersion: external-secrets.io/v1beta1
+kind: ExternalSecret
+metadata:
+  name: aws-creds
+spec:
+  data:
+    - secretKey: awsAccessKey 
+      remoteRef:
+        key: 88671bfc-14d4-29ad-ab9b-950eaac3808f
+    - secretKey: awsSecretKey 
+      remoteRef:
+        key: ac307a9e-41fc-23df-2f28-3ce521b971ea
+    - secretKey: awsBaseDomain
+      remoteRef:
+        key: 3ab49d22-2408-3dd0-3891-7d613f74c293
+    - secretKey: openshiftPullSecret
+      remoteRef:
+        key: 115f3c37-cd7c-5704-173f-a8a3e1234b2d
+  refreshInterval: 24h0m0s
+  secretStoreRef:
+    name: cluster
+    kind: ClusterSecretStore
+  target:
+    name: aws-creds
+    creationPolicy: Owner
+    template:
+      type: Opaque
+      data:
+        aws_access_key_id: |-
+          "{{ .awsAccessKey | toString }}"
+        aws_secret_access_key: |-
+          "{{ .awsSecretKey | toString }}"
+        baseDomain: |-
+          "{{ .awsBaseDomain | toString }}" }}
+        pullSecret: |- 
+          "{{ .openshiftPullSecret | toString }}"
