@@ -27,10 +27,10 @@ spec:
       type: Opaque
       data:
         aws_access_key_id: |-
-          "{{ .awsAccessKey | toString }}"
+          {{ .awsAccessKey | toString }}
         aws_secret_access_key: |-
-          "{{ .awsSecretKey | toString }}"
+          {{ .awsSecretKey | toString }}
         baseDomain: |-
-          "{{ .awsBaseDomain | toString }}" }}
+          {{ .awsBaseDomain | toString }}
         pullSecret: |- 
-          "{{ .openshiftPullSecret | toString }}"
+          {{ .openshiftPullSecret | toString }}
