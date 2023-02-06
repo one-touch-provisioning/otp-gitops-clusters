@@ -1,7 +1,7 @@
 apiVersion: cluster.open-cluster-management.io/v1alpha1
 kind: HypershiftDeployment
 metadata:
-  name: aws-hosted-cluser
+  name: aws-hosted-cluster
 spec:
   hostingCluster: local-cluster
   hostingNamespace: clusters
