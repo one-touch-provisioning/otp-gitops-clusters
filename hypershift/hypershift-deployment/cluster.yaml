@@ -1,0 +1,14 @@
+apiVersion: cluster.open-cluster-management.io/v1alpha1
+kind: HypershiftDeployment
+metadata:
+  name: aws-hosted-cluser
+spec:
+  hostingCluster: local-cluster
+  hostingNamespace: clusters
+  infrastructure:
+    cloudProvider:
+      name: aws-creds
+    configure: True
+    platform:
+      aws:
+        region: ap-northeast-1
