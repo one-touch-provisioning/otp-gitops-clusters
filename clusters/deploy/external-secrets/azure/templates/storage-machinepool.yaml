@@ -1,4 +1,4 @@
-{{- if eq .Values.storage.enabled -}}
+{{- if .Values.storage.enabled -}}
 apiVersion: hive.openshift.io/v1
 kind: MachinePool
 metadata:
