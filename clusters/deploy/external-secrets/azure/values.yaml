@@ -40,7 +40,7 @@ workers:
   machineType: Standard_D16_v3
 
 storage:
-  enabled: true
+  enabled: false
   count: 3
   diskSize: 256
   machineType: Standard_D16_v3
