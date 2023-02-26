@@ -1,0 +1,32 @@
+{{- if eq .Values.storage.enabled -}}
+---
+apiVersion: apps.open-cluster-management.io/v1
+kind: PlacementRule
+metadata:
+  name: install-odf-placement
+  namespace: {{ .Values.cluster }}
+spec:
+  clusterSelector:
+    matchExpressions:
+      - key: name
+        operator: In
+        values:
+          - '{{ .Values.cluster }}'
+  clusterConditions:
+    - status: "True"
+      type: ManagedClusterConditionAvailable
+---
+apiVersion: policy.open-cluster-management.io/v1
+kind: PlacementBinding
+metadata:
+  name: install-odf-placement
+  namespace: {{ .Values.cluster }}
+placementRef:
+  name: install-odf-placement
+  apiGroup: apps.open-cluster-management.io
+  kind: PlacementRule
+subjects:
+  - name: install-odf
+    apiGroup: policy.open-cluster-management.io
+    kind: Policy
+{{- end -}}

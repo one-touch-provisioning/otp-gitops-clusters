@@ -11,7 +11,7 @@ managedCluster:
                 # within the "environment" folder
 
 # OpenShift Version to deploy
-imageName: 4.10.18
+imageName: 4.12.4
 
 # Add Cluster to Existing ClusterSet, else it will automatically join the "global"  and "default" ClusterSets
 clusterSet:
@@ -37,7 +37,26 @@ masters:
 workers:
   count: 3
   diskSize: 128
-  machineType: Standard_D4s_v3
+  machineType: Standard_D16_v3
+
+storage:
+  enabled: true
+  count: 3
+  diskSize: 256
+  machineType: Standard_D16_v3
+  storageClusterSize: 2Ti # supported sizes: 0.5, 2, 4 Ti
+# if [[ "$platform" == "aws" ]]; then
+#   storageClass=${defsc:-"gp2"}
+# elif [[ "$platform" == "azure" ]]; then
+#   storageClass=${defsc:-"managed-premium"}
+# elif [[ "$platform" == "gcp" ]]; then
+#   storageClass=${defsc:-"standard"}
+# elif [[ "$platform" == "ibmcloud" ]]; then
+#   storageClass=${defsc:-"ibmc-vpc-block-10iops-tier"}
+# elif [[ "$platform" == "vsphere" ]]; then
+#   storageClass=${defsc};
+# fi
+  storageClassName: managed-premium
 
 # Network CIDR's to be used
 network:
@@ -47,3 +66,10 @@ network:
 
 # Load FIPS modules. Valid values are true or false
 fipsModule: false
+
+externalSecretKeys:
+  azure: 
+    azureOsServicePrincipal: ef8a9c51-6300-ff8a-2aa4-aef4c9d8b166
+  openshift:
+    pullSecret: adc32372-cafe-0488-a9ab-6a971a6ca2d8
+    sshPrivate: 91b5a6de-a9be-2b91-a3e8-2b09e3390bcb
