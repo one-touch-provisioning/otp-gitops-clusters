@@ -22,5 +22,5 @@ spec:
       - "3"
   labels:
     cluster.ocs.openshift.io/openshift-storage: ''
-  replicas: {{ .Values.workers.count }}
+  replicas: {{ .Values.storage.count }}
 {{- end -}}
