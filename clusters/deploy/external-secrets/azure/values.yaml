@@ -57,6 +57,7 @@ storage:
 #   storageClass=${defsc};
 # fi
   storageClassName: managed-premium
+  odfVersion: stable-4.12
 
 # Network CIDR's to be used
 network:
