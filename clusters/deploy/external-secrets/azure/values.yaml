@@ -37,13 +37,13 @@ masters:
 workers:
   count: 3
   diskSize: 128
-  machineType: Standard_D16_v3
+  machineType: Standard_D16s_v3
 
 storage:
   enabled: false
   count: 3
   diskSize: 256
-  machineType: Standard_D16_v3
+  machineType: Standard_D16s_v3
   storageClusterSize: 2Ti # supported sizes: 0.5, 2, 4 Ti
 # if [[ "$platform" == "aws" ]]; then
 #   storageClass=${defsc:-"gp2"}
