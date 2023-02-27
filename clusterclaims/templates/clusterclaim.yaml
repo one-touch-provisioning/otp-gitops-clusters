@@ -11,4 +11,7 @@ metadata:
   namespace: 'rhacm-clusterpools'
 spec:
   clusterPoolName: {{ .Values.clusterPoolName }}
+  {{- if .Values.clusterLifetime }}
+  lifetime: {{ .Values.clusterLifetime }}
+  {{- end -}}
 
