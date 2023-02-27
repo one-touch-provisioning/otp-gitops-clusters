@@ -14,7 +14,7 @@ metadata:
     cluster.open-cluster-management.io/clusterset: {{.Values.clusterSet.name}} 
     {{- end}}
 spec:
-  size: 0
+  size: {{ .Values.poolSize | default 0 }}
   runningCount: 0
   baseDomain: {{ .Values.provider.baseDomain }}
   installConfigSecretTemplateRef:

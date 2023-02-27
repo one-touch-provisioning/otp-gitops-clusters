@@ -1,6 +1,7 @@
 # Cluster Pool Name
 clusterpoolName:  
-
+# Number of clusters in pool created to be claimed
+poolSize: 2
 # OpenShift Version to deploy
 imageName: 4.10.18
 
