@@ -30,7 +30,8 @@ spec:
                     machine.openshift.io/cluster-api-machine-type: infra
                     node-role.kubernetes.io/infra: ""
                     cluster.ocs.openshift.io/openshift-storage: ""
-                  namespace: 'rhacm-clusterpools'
+                  namespace: |
+                    {{ "{{hub (lookup \"hive.openshift.io/v1\" \"ClusterClaim\" \"rhacm-clusterpools\" \"{{ .Values.clusterClaimName }}\" ).spec.namespace hub}}" }}
                 spec:
                   clusterDeploymentRef:
                     name: |
