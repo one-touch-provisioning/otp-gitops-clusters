@@ -33,7 +33,8 @@ spec:
                   namespace: 'rhacm-clusterpools'
                 spec:
                   clusterDeploymentRef:
-                    name: {{ "{{hub (lookup \"hive.openshift.io/v1\" \"ClusterClaim\" \"rhacm-clusterpools\" \"{{ .Values.clusterClaimName }}\" ).spec.namespace hub}}" }}
+                    name: |
+                      {{ "{{hub (lookup \"hive.openshift.io/v1\" \"ClusterClaim\" \"rhacm-clusterpools\" \"{{ .Values.clusterClaimName }}\" ).spec.namespace hub}}" }}
                   name: {{ .Values.clusterClaimName }}-storage
                   platform:
                     platform:
