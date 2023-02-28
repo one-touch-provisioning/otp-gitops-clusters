@@ -1,0 +1,30 @@
+---
+apiVersion: apps.open-cluster-management.io/v1
+kind: PlacementRule
+metadata:
+  name: deploy-storage-machinepools
+  namespace: rhacm-clusterpools
+spec:
+  clusterSelector:
+    matchExpressions:
+      - key: name
+        operator: In
+        values:
+          - 'local-cluster'
+  clusterConditions:
+    - status: "True"
+      type: ManagedClusterConditionAvailable
+---
+apiVersion: policy.open-cluster-management.io/v1
+kind: PlacementBinding
+metadata:
+  name: deploy-storage-machinepools
+  namespace: rhacm-clusterpools
+placementRef:
+  name: deploy-storage-machinepools
+  apiGroup: apps.open-cluster-management.io
+  kind: PlacementRule
+subjects:
+  - name: deploy-storage-nodes-{{ .Values.clusterClaimName }}
+    apiGroup: policy.open-cluster-management.io
+    kind: Policy
