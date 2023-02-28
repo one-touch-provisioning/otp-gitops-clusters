@@ -1,0 +1,34 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: azure-machinepools
+spec:
+  generators:
+  - clusters:
+      selector:
+        matchLabels:
+          apps.open-cluster-management.io/acm-cluster: "true"
+          hive.openshift.io/cluster-platform: azure
+  template:
+    metadata:
+      name: '{{name}}-storage'
+    spec:
+      project: clusters
+      source:
+        # infra repo must be added to the sourceRepos in ArgoCD AppProject
+        repoURL: https://github.com/otp-itz/otp-gitops-infra.git
+        path: machinepools
+        helm:
+          values: |
+            cloudProvider:
+              name: "azure" # aws, azure, ibmcloud or vsphere
+              managed: false # for roks, aro, rosa set to true
+            cloud:
+              clusterName: {{ name }}
+      destination:
+        server: 'https://kubernetes.default.svc'
+        namespace: '{{ name }}'
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
