@@ -34,7 +34,7 @@ spec:
                 spec:
                   clusterDeploymentRef:
                     name: {{ "{{hub (lookup \"hive.openshift.io/v1\" \"ClusterClaim\" \"rhacm-clusterpools\" \"{{ .Values.clusterClaimName }}\" ).spec.namespace hub}}" }}
-                  name: '{{ fromClusterClaim \"aws-cluster\" }}'
+                  name: {{ .Values.clusterClaimName }}-storage
                   platform:
                     platform:
                       azure:
