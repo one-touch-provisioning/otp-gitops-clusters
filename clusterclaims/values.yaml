@@ -25,23 +25,3 @@ managedCluster:
     url: github.private.com/private/otp-gitops-infra
     ghTokenSecretId: abcdef
     secretStore: "secret-store-2"
-
-storage:
-  enabled: false
-  count: 3
-  diskSize: 256
-  machineType: Standard_D16s_v3
-  storageClusterSize: 2Ti # supported sizes: 0.5, 2, 4 Ti
-# if [[ "$platform" == "aws" ]]; then
-#   storageClass=${defsc:-"gp2"}
-# elif [[ "$platform" == "azure" ]]; then
-#   storageClass=${defsc:-"managed-premium"}
-# elif [[ "$platform" == "gcp" ]]; then
-#   storageClass=${defsc:-"standard"}
-# elif [[ "$platform" == "ibmcloud" ]]; then
-#   storageClass=${defsc:-"ibmc-vpc-block-10iops-tier"}
-# elif [[ "$platform" == "vsphere" ]]; then
-#   storageClass=${defsc};
-# fi
-  storageClassName: managed-premium
-  odfVersion: stable-4.12
