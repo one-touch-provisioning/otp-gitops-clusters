@@ -1,0 +1,39 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: azure-storage
+  namespace: openshift-gitops
+spec:
+  generators:
+  - clusters:
+      selector:
+        matchLabels:
+          apps.open-cluster-management.io/acm-cluster: "true"
+          hive.openshift.io/cluster-platform: azure
+          hive.openshift.io/version-major-minor: "{{ .Values.odfVersion }}"
+  template:
+    metadata:
+      name: {{ `"{{ name }}-odf"` }}
+    spec:
+      project: clusters
+      source:
+        # infra repo must be added to the sourceRepos in ArgoCD AppProject
+        repoURL: https://github.com/otp-itz/otp-gitops-infra.git
+        path: storage
+        helm:
+          values: |
+            channel: stable-{{ .Values.odfVersion }}
+            sizeGiB: {{ .Values.odfSizeGB }}
+            storageClass: managed-premium
+            argo:
+              namespace: openshift-gitops
+              serviceAccount: openshift-gitops-otp-argocd-application-controller
+      destination:
+        server: {{ `"{{ server }}"` }}
+        namespace: 'openshift-storage'
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+        syncOptions:
+          - CreateNamespace=true

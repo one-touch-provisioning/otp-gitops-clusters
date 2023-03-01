@@ -11,7 +11,7 @@ managedCluster:
                 # within the "environment" folder
 
 # OpenShift Version to deploy
-imageName: 4.10.18
+imageName: 4.12.4
 
 # Add Cluster to Existing ClusterSet, else it will automatically join the "global"  and "default" ClusterSets
 clusterSet:
