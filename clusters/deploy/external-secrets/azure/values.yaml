@@ -68,9 +68,9 @@ network:
 # Load FIPS modules. Valid values are true or false
 fipsModule: false
 
-externalSecretKeys:
-  azure: 
-    azureOsServicePrincipal: ef8a9c51-6300-ff8a-2aa4-aef4c9d8b166
-  openshift:
-    pullSecret: adc32372-cafe-0488-a9ab-6a971a6ca2d8
-    sshPrivate: 91b5a6de-a9be-2b91-a3e8-2b09e3390bcb
+# Everything Secrets
+secrets:
+    azureSecrets:
+      azureOsServicePrincipalRef: 4f5caf7a-174c-5890-84b2-d7cffc7a4be7
+    openshiftPullSecretRef: adc32372-cafe-0488-a9ab-6a971a6ca2d8
+    openshiftSSHPrivateKeyRef: 91b5a6de-a9be-2b91-a3e8-2b09e3390bcb
