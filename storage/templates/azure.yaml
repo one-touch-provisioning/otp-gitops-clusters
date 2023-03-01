@@ -13,7 +13,7 @@ spec:
           hive.openshift.io/version-major-minor: "{{ .Values.odfVersion }}"
   template:
     metadata:
-      name: '{{name}}-odf'
+      name: {{ `"{{ name }}-odf"` }}
     spec:
       project: clusters
       source:
@@ -29,7 +29,7 @@ spec:
               namespace: openshift-gitops
               serviceAccount: openshift-gitops-otp-argocd-application-controller
       destination:
-        server: '{{ server }}'
+        server: {{ `"{{ server }}"` }}
         namespace: 'openshift-storage'
       syncPolicy:
         automated:
