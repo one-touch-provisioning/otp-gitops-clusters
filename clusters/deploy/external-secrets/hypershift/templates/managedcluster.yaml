@@ -2,8 +2,7 @@ apiVersion: cluster.open-cluster-management.io/v1
 kind: ManagedCluster
 metadata:
   labels:
-    cloud: Amazon
-    region: {{ .Values.provider.region }}
+    cloud: BareMetal
     name: '{{ .Values.cluster }}'
     vendor: OpenShift
     {{- if .Values.clusterSet.enabled }}
@@ -11,6 +10,9 @@ metadata:
     {{- end}}
   name: '{{ .Values.cluster }}'
   annotations:
+    import.open-cluster-management.io/hosting-cluster-name: local-cluster 
+    import.open-cluster-management.io/klusterlet-deploy-mode: Hosted
+    open-cluster-management/created-via: hypershift
     argocd.argoproj.io/sync-wave: "470"
     helm.sh/hook-weight: "470"
 spec:

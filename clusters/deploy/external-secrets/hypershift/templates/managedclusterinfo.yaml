@@ -5,4 +5,8 @@ metadata:
   annotations:
     argocd.argoproj.io/sync-wave: "470"
     helm.sh/hook-weight: "470"
-  namespace: '{{ .Values.cluster }}'
+  namespace: '{{ .Values.clusterNamespace }}'
+  labels:
+    cloud: BareMetal
+    vendor: OpenShift
+    name: {{ .Values.cluster }} 

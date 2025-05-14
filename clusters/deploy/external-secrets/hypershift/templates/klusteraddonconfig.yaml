@@ -10,7 +10,7 @@ spec:
   clusterName: '{{ .Values.cluster }}'
   clusterNamespace: '{{ .Values.cluster }}'
   clusterLabels:
-    cloud: Amazon
+    cloud: BareMetal
     vendor: OpenShift
   applicationManager:
     enabled: true
@@ -19,6 +19,4 @@ spec:
   searchCollector:
     enabled: true
   certPolicyController:
-    enabled: true
-  iamPolicyController:
     enabled: true

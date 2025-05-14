@@ -8,3 +8,13 @@ metadata:
     argocd.argoproj.io/sync-wave: "450"
     helm.sh/hook-weight: "450"
   name: {{ .Values.cluster }}
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  annotations:
+    openshift.io/display-name: {{ .Values.clusterNamespace }}
+    kubernetes.io/metadata.name: {{ .Values.clusterNamespace }}
+    argocd.argoproj.io/sync-wave: "450"
+    helm.sh/hook-weight: "450"
+  name: {{ .Values.clusterNamespace }}

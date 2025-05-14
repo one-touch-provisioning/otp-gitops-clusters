@@ -1,5 +1,6 @@
 # Cluster Name
-cluster: hypershift-1
+cluster: hcp0
+clusterNamespace: hcp0-cluster
 
 # HyperShift Supported Platform : Valid Values are KubeVirt aka OpenShift Virtualisation, Agent (ISO Based Installer)
 hyperShiftPlatform: kubevirt
@@ -14,50 +15,32 @@ managedCluster:
                 # within the "environment" folder
 
 # OpenShift Version to deploy
-imageName: 4.12.5
+imageName: 4.16.39
 
 # Add Cluster to Existing ClusterSet, else it will automatically join the "global"  and "default" ClusterSets
 clusterSet:
   name: "multicloud-cluster-set"
   enabled: false
 
-# Set Cluster Power State. Options are Running or Hibernating
-powerState: Running
-  
-# Cloud Provider Configuration
-provider:
-  region: ap-southeast-1
-  baseDomain: mutihybridcloudkitchen.com
-  sshPublickey: 
-
 # Compute Resources to be used for Masters and Workers
-masters:
-  count: 3
-  diskIops: 4000
-  diskSize: 100
-  diskType: io1
-  machineType: m5.xlarge
-
-workers:
-  count: 3
-  diskIops: 4000
-  diskSize: 100
-  diskType: io1
-  machineType: m5.xlarge
+nodepool:
+  name: hcp0-np-1
+  count: 2
+  computeCores: 4
+  computeMemory: 16Gi
+  diskSize: 32Gi
 
 # Network CIDR's to be used
 network:
-  clusterCidr: 10.128.0.0/14
-  machineCidr: 10.0.0.0/16
-  serviceCidr: 172.30.0.0/16
+  clusterCidr: 10.132.0.0/14
+  serviceCidr: 172.31.0.0/16
 
-# Load FIPS modules. Valid values are true or false
-fipsModule: false
+# Availability Policy
+availabilityPolicy:
+  controller: SingleReplica
+  infrastructure: SingleReplica
 
 # Everything Secrets
 secrets:
-    awsSecrets:
-      awsAccessKeyRef: 88671bfc-14d4-29ad-ab9b-950eaac3808f
-      awsSecretKeyRef: ac307a9e-41fc-23df-2f28-3ce521b971ea
     openshiftPullSecretRef: adc32372-cafe-0488-a9ab-6a971a6ca2d8
-    openshiftSSHPrivateKeyRef: 91b5a6de-a9be-2b91-a3e8-2b09e3390bcb
+    openshiftSSHPublicKeyRef: 91b5a6de-a9be-2b91-a3e8-2b09e3390bcb

@@ -1,0 +1,25 @@
+apiVersion: hypershift.openshift.io/v1beta1
+kind: NodePool
+metadata:
+  name: '{{ .Values.nodepool.name }}'
+  namespace: '{{ .Values.clusterNamespace }}'
+spec:
+  arch: amd64
+  clusterName: '{{ .Values.cluster }}'
+  replicas: {{ .Values.nodepool.count }}
+  management:
+    autoRepair: false
+    upgradeType: Replace
+  platform:
+    type: KubeVirt
+    kubevirt:
+      compute:
+        cores: {{ .Values.nodepool.computeCores }}
+        memory: {{ .Values.nodepool.computeMemory }}
+      rootVolume:
+        type: Persistent
+        persistent:
+          size: {{ .Values.nodepool.diskSize }}
+      defaultPodNetwork: true
+  release:
+    image: quay.io/openshift-release-dev/ocp-release:{{ .Values.imageName }}
