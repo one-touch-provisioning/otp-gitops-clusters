@@ -5,6 +5,7 @@ metadata:
     cloud: BareMetal
     name: '{{ .Values.cluster }}'
     vendor: OpenShift
+    openshiftVersion: {{ .Values.imageName }}
     {{- if .Values.clusterSet.enabled }}
     cluster.open-cluster-management.io/clusterset: {{.Values.clusterSet.name}} 
     {{- end}}

@@ -20,6 +20,5 @@ spec:
         type: Persistent
         persistent:
           size: {{ .Values.nodepool.diskSize }}
-      defaultPodNetwork: true
   release:
-    image: quay.io/openshift-release-dev/ocp-release:{{ .Values.imageName }}
+    image: 'quay.io/openshift-release-dev/ocp-release:{{ .Values.imageName }}-multi'
